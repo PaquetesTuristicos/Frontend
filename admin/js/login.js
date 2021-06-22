@@ -1,6 +1,4 @@
-var login = document.getElementById('loginForm');
-console.log(login);
-
+var login =document.querySelector('#loginForm')
 
 login.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -9,7 +7,7 @@ login.addEventListener('submit', function (e) {
     let jsonDataConvert = JSON.stringify(
         {
             nombre: datos.get('email'),
-            preparacion: datos.get('password'),
+            password: datos.get('password'),
 
         }               
     );
@@ -21,7 +19,7 @@ login.addEventListener('submit', function (e) {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + this.state.clientToken
+            'Authorization': 'Bearer ' + this.state
         },
     })
         .then(res => res.json())
