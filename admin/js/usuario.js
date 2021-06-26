@@ -1,9 +1,11 @@
 // Usuario 
 // var bottomUsuario = document.getElementById('bottomUsuario');
+var msusuario = `https://localhost:44384/api/user/`
+
 var usuario = document.querySelector('#contenido')
 pintar()
 function pintar(){
-    fetch(`https://localhost:44384/api/user`, {
+    fetch(msusuario, {
         method: 'GET',
         headers: myHeaders,
     })
@@ -160,7 +162,7 @@ function createUsuario(){
     );
     console.log(jsonDataConvert)
 
-    fetch(`https://localhost:44384/api/user`, {
+    fetch(msusuario, {
         method: 'POST',
         body: jsonDataConvert,
         headers: myHeaders,
@@ -175,7 +177,7 @@ function createUsuario(){
 }
 // editar usuario 
 function editUsuario(id){
-  fetch(`https://localhost:44384/api/user/${id}`, {
+  fetch(msusuario+`${id}`, {
     method: 'GET',
     headers: myHeaders,
 })
@@ -188,7 +190,7 @@ function editUsuario(id){
 };
 // eliminar usuario 
 function deliteUsuario(id){
-  fetch(`https://localhost:44384/api/user/${id}`, {
+  fetch(msusuario+`${id}`, {
     method: 'DELETE',
     headers: myHeaders,
 })
