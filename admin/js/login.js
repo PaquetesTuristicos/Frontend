@@ -26,7 +26,7 @@ login.addEventListener('submit', function (e) {
         console.log(res.headers)
         console.log(res.body)
         if(res.status == 200){
-            // window.location.href = "../admin";
+            window.location.href = "../admin";
         }else{
             alert("Usuario o Contraseña incorrecta")
         }
