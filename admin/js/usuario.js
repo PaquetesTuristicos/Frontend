@@ -37,7 +37,7 @@ Nuevo Usuario
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="cargarUsuarioForm">
+                <form id="cargarUsuarioForm">                   
                     <input type="text" name="nombre" placeholder="Ingresa Nombre" class="form-control my-3" required />
                     <input type="text" name="apellido" placeholder="Ingresa Apellido" class="form-control my-3" required />
                     <input type="text" name="email" placeholder="Ingresa Email" class="form-control my-3" required />
@@ -74,10 +74,11 @@ Nuevo Usuario
             </div>
             <div class="modal-body">
                 <form id="editUsuarioForm">
-                    <input type="text" name="nombre" placeholder="Ingresa Nombre" class="form-control my-3" required />
-                    <input type="text" name="apellido" placeholder="Ingresa Apellido" class="form-control my-3" required />
-                    <input type="text" name="email" placeholder="Ingresa Email" class="form-control my-3" required />
-                    <input type="password" name="password" placeholder="Ingresa Password" class="form-control my-3" required />
+                <input type="number" name="id" placeholder="" class="form-control my-3 id" required />
+                    <input type="text" name="nombre" placeholder="Ingresa Nombre" class="form-control my-3 nombre" required />
+                    <input type="text" name="apellido" placeholder="Ingresa Apellido" class="form-control my-3 apellido" required />
+                    <input type="text" name="email" placeholder="Ingresa Email" class="form-control my-3 email" required />
+                    <input type="password" name="password" placeholder="Ingresa Password" class="form-control my-3 password" required />
                     <div class="col-md-4">
                         <label for="inputState" class="form-label">Tipo</label>
                         <select id="editroll" class="form-select selectRoll" required>
@@ -89,7 +90,7 @@ Nuevo Usuario
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" onclick="editUsuario()">Editar</button>
+                        <button id="editarUsuario" type="button" class="btn btn-primary">Editar</button>
                     </div>
                 </form>
                 <div class="mt-3" id="editarUsuarioRespuesta">
@@ -140,7 +141,7 @@ var tabla = document.querySelector('#tbodyUsuario')
         <td>${valor.email}</td>
         <td>${valor.roll.nombre}</td>
         <td>
-            <button id="${valor.userId}" type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editarUsuarioModal"">Editar</button>
+            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editarUsuarioModal" onclick="editUsuario(${valor.userId})">Editar</button>
             <button type="button" class="btn btn-outline-danger" onclick="deliteUsuario(${valor.userId})">Borrar</button>
         </td>
       </tr>`
@@ -177,17 +178,55 @@ function createUsuario(){
 }
 // editar usuario 
 function editUsuario(id){
-  fetch(msusuario+`${id}`, {
-    method: 'GET',
-    headers: myHeaders,
-})
-    .then(res => res.json())
-    .then(datos => {
-        console.log(datos)
-        location.reload()
-        
+    var formularioUsuarioEdit = document.getElementById('editUsuarioForm');
+    var usuarioRespuestaEdit = document.getElementById('editUsuarioRespuesta');
+
+    fetch(msusuario+`${id}`, {
+        method: 'GET',
+        headers: myHeaders,
     })
-};
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            formularioUsuarioEdit.querySelector('.id').value = id
+            formularioUsuarioEdit.querySelector('.nombre').value = data.nombre
+            formularioUsuarioEdit.querySelector('.apellido').value = data.apellido
+            formularioUsuarioEdit.querySelector('.email').value = data.email
+            formularioUsuarioEdit.querySelector('.password').value = data.password
+
+        })
+        var bottomEdit = document.getElementById('editarUsuario')
+        bottomEdit.addEventListener('click', function(e){
+            e.preventDefault();
+            ejecutarEdit(id)
+        });
+        function ejecutarEdit(id){
+            var formularioUsuarioEdit = document.getElementById('editUsuarioForm');
+            var datos = new FormData(formularioUsuarioEdit);
+            let jsonDataConvertEdit = JSON.stringify(
+                {
+                    nombre: datos.get('nombre'),
+                    apellido: datos.get('apellido'),
+                    email: datos.get('email'),
+                    password: datos.get('password'),
+                    roll: new Number(document.getElementById("editroll").value)
+                }               
+            );
+            fetch(msusuario+`${id}`, {
+                method: 'PUT',
+                body: jsonDataConvertEdit,
+                headers: myHeaders,
+                
+            })
+                .then(res => res.json())
+                .then(datos => {
+                    console.log(datos)
+                    alert("usuario editado")
+                    location.reload()
+                })
+            }
+  };
+
 // eliminar usuario 
 function deliteUsuario(id){
   fetch(msusuario+`${id}`, {
