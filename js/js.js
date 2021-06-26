@@ -7,12 +7,3 @@ function RedesSociales(event){
         }
     );
 }
-//Paquete
-document.getElementById('socialClick').onclick = RedesSociales;
-function RedesSociales(event){
-    $('html,body').animate(
-        {
-            scrollTop: $('#social').offset().top
-        }
-    );
-}
