@@ -7,6 +7,7 @@ function RedesSociales(event){
         }
     );
 }
+<<<<<<< HEAD
 //Paquete
 document.getElementById('socialClick').onclick = RedesSociales;
 function RedesSociales(event){
@@ -16,3 +17,5 @@ function RedesSociales(event){
         }
     );
 }
+=======
+>>>>>>> JuanCOnde
