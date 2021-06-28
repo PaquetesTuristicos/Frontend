@@ -26,8 +26,28 @@ bottomUsuario.addEventListener('click', function (e) {
     e.preventDefault()
     location.assign(pagina + "usuario/");
 })
-
+// paquete 
+bottomPaquetes.addEventListener('click', function (e) {
+    e.preventDefault()
+    location.assign(pagina + "paquete/");
+})
+// viaje 
+bottomViajes.addEventListener('click', function (e) {
+    e.preventDefault()
+    location.assign(pagina + "viaje/");
+})
+// reserva 
+bottomReservas.addEventListener('click', function (e) {
+    e.preventDefault()
+    location.assign(pagina + "reserva/");
+})
+// transporte 
+bottomTransporte.addEventListener('click', function (e) {
+    e.preventDefault()
+    location.assign(pagina + "transporte/");
+})
+// panel 
 bottomPanel.addEventListener('click', function (e) {
     e.preventDefault()
-    location.assign(pagina);
-});
+    location.assign(pagina + "panel/");
+})
