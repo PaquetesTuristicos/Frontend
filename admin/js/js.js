@@ -7,6 +7,15 @@ var bottomViajes = document.getElementById('bottomViajes');
 var bottomTransporte = document.getElementById('bottomTransporte');
 var bottomUsuario = document.getElementById('bottomUsuario');
 
+// validacion de login 
+function validarLogin(){
+    if(localStorage.getItem('token') != null ){
+        alert(localStorage.getItem('token'))
+    }else{
+        window.location.href = 'login.html'
+    }
+}
+validarLogin()
 // cabecera 
 myHeaders = new Headers({
     'Accept': 'application/json',
