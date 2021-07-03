@@ -1,50 +1,49 @@
-// Usuario 
-console.log(localStorage.getItem('token'))
+// Viaje 
+// var bottomViaje = document.getElementById('bottomViaje');
+var msViaje = `https://localhost:44385/api/viajes/`
+var mstipoViaje = `https://localhost:44385/api/tipoviajes/`
+var msterminal = `https://localhost:44385/api/terminal/`
 
-
-// var bottomUsuario = document.getElementById('bottomUsuario');
-var msusuario = `https://localhost:44384/api/user/`
-
-var usuario = document.querySelector('#contenido')
+var Viaje = document.querySelector('#contenido')
 pintar()
 function pintar(){
-    fetch(msusuario, {
+    fetch(msViaje, {
         method: 'GET',
         headers: myHeaders,
     })
         .then(res => res.json())
         .then(datos => {
-            usuarios(datos)
+            Viajes(datos)
         })
 }
 // carga datos en pantalla 
-function usuarios(data) {
-    usuario.innerHTML = ''
-    usuario.innerHTML = `<div>
+function Viajes(data) {
+    Viaje.innerHTML = ''
+    Viaje.innerHTML = `<div>
     <div>
-        <H3>Usuarios</H3>
+        <H3>Viajes</H3>
     </div>
 </div>
 <div>
 <div>
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#cargarUsuarioModal">
-Nuevo Usuario
+<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#cargarViajeModal">
+Nuevo Viaje
 </button>   
 <!-- Modal -->
-<div class="modal fade" id="cargarUsuarioModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="cargarViajeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Nuevo Usuario</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Nuevo Viaje</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="cargarUsuarioForm">                   
-                    <input type="text" name="nombre" placeholder="Ingresa Nombre" class="form-control my-3" required />
-                    <input type="text" name="apellido" placeholder="Ingresa Apellido" class="form-control my-3" required />
-                    <input type="text" name="email" placeholder="Ingresa Email" class="form-control my-3" required />
-                    <input type="password" name="password" placeholder="Ingresa Password" class="form-control my-3" required />
+                <form id="cargarViajeForm">                   
+                    <input type="text" name="fechaIda" placeholder="Ingresa fechaIda" class="form-control my-3" required />
+                    <input type="text" name="fechaVuelta" placeholder="Ingresa fechaVuelta" class="form-control my-3" required />
+                    <input type="text" name="excursion" placeholder="Ingresa excursion" class="form-control my-3" required />
+                    <input type="text" name="hora" placeholder="Ingresa hora" class="form-control my-3" required />
                     <div class="col-md-4">
                         <label for="inputState" class="form-label">Tipo</label>
                         <select id="roll" class="form-select selectRoll" required>
@@ -56,10 +55,10 @@ Nuevo Usuario
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" onclick="createUsuario()">Crear</button>
+                        <button type="button" class="btn btn-primary" onclick="createViaje()">Crear</button>
                     </div>
                 </form>
-                <div class="mt-3" id="cargarUsuarioRespuesta">
+                <div class="mt-3" id="cargarViajeRespuesta">
 
                 </div>
             </div>
@@ -68,15 +67,15 @@ Nuevo Usuario
     </div>
 </div>
 <!-- Modal editar -->
-<div class="modal fade" id="editarUsuarioModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="editarViajeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Editar Usuario</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Editar Viaje</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="editUsuarioForm">
+                <form id="editViajeForm">
                 <input type="number" name="id" placeholder="" class="form-control my-3 id" required />
                     <input type="text" name="nombre" placeholder="Ingresa Nombre" class="form-control my-3 nombre" required />
                     <input type="text" name="apellido" placeholder="Ingresa Apellido" class="form-control my-3 apellido" required />
@@ -93,10 +92,10 @@ Nuevo Usuario
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button id="editarUsuario" type="button" class="btn btn-primary">Editar</button>
+                        <button id="editarViaje" type="button" class="btn btn-primary">Editar</button>
                     </div>
                 </form>
-                <div class="mt-3" id="editarUsuarioRespuesta">
+                <div class="mt-3" id="editarViajeRespuesta">
 
                 </div>
             </div>
@@ -104,7 +103,7 @@ Nuevo Usuario
         </div>
     </div>
 </div>
-        <button type="button" class="btn btn-primary">Buscar Usuario</button>
+        <button type="button" class="btn btn-primary">Buscar Viaje</button>
       
         <div class="btn-group" role="group">
           <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -123,38 +122,41 @@ Nuevo Usuario
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Apellido</th>
-        <th scope="col">Email</th>
-        <th scope="col">Roll</th>
+        <th scope="col">fechaHoraSalida</th>
+        <th scope="col">terminalOrigenId</th>
+        <th scope="col">tipoViajeId</th>
+        <th scope="col">terminalDestinoId</th>
+        <th scope="col">terminalDestinoId</th>
         <th scope="col">accion</th>
       </tr>
     </thead>
-    <tbody id="tbodyUsuario">
+    <tbody id="tbodyViaje">
     </tbody>
     </table>
 </div>`
-var tabla = document.querySelector('#tbodyUsuario')
+var tabla = document.querySelector('#tbodyViaje')
     for (let valor of data) {
+        console.log(valor)
+        // let tipo = tipoViaje(valor.tipoId)
         tabla.innerHTML += `
         <tr>
-        <th scope="row">${valor.userId}</th>
-        <td>${valor.nombre}</td>
-        <td>${valor.apellido}</td>
-        <td>${valor.email}</td>
-        <td>${valor.roll.nombre}</td>
+        <th scope="row">${valor.viajeId}</th>
+        <td>${valor.fechaHoraSalida}</td>
+        <td>${valor.tipoViajeId}</td>
+        <td>${valor.terminalOrigenId}</td>
+        <td>${valor.terminalDestinoId}</td>
         <td>
-            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editarUsuarioModal" onclick="editUsuario(${valor.userId})">Editar</button>
-            <button type="button" class="btn btn-outline-danger" onclick="deliteUsuario(${valor.userId})">Borrar</button>
+            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editarViajeModal" onclick="editViaje(${valor.userId})">Editar</button>
+            <button type="button" class="btn btn-outline-danger" onclick="deliteViaje(${valor.viajeId})">Borrar</button>
         </td>
       </tr>`
     }
 }
-//crear Usuario 
-function createUsuario(){  
-    var formularioUsuarioCargar = document.getElementById('cargarUsuarioForm');
-    var usuarioRespuestaCargar = document.getElementById('cargarUsuarioRespuesta');
-    var datos = new FormData(formularioUsuarioCargar);
+//crear Viaje 
+function createViaje(){  
+    var formularioViajeCargar = document.getElementById('cargarViajeForm');
+    var ViajeRespuestaCargar = document.getElementById('cargarViajeRespuesta');
+    var datos = new FormData(formularioViajeCargar);
     let jsonDataConvert = JSON.stringify(
         {
             nombre: datos.get('nombre'),
@@ -166,7 +168,7 @@ function createUsuario(){
     );
     console.log(jsonDataConvert)
 
-    fetch(msusuario, {
+    fetch(msViaje, {
         method: 'POST',
         body: jsonDataConvert,
         headers: myHeaders,
@@ -175,37 +177,37 @@ function createUsuario(){
         .then(res => res.json())
         .then(datos => {
             console.log(datos)
-            alert("usuario creado")
+            alert("Viaje creado")
             location.reload()
         })
 }
-// editar usuario 
-function editUsuario(id){
-    var formularioUsuarioEdit = document.getElementById('editUsuarioForm');
-    var usuarioRespuestaEdit = document.getElementById('editUsuarioRespuesta');
+// editar Viaje 
+function editViaje(id){
+    var formularioViajeEdit = document.getElementById('editViajeForm');
+    var ViajeRespuestaEdit = document.getElementById('editViajeRespuesta');
 
-    fetch(msusuario+`${id}`, {
+    fetch(msViaje+`${id}`, {
         method: 'GET',
         headers: myHeaders,
     })
         .then(res => res.json())
         .then(data => {
             console.log(data)
-            formularioUsuarioEdit.querySelector('.id').value = id
-            formularioUsuarioEdit.querySelector('.nombre').value = data.nombre
-            formularioUsuarioEdit.querySelector('.apellido').value = data.apellido
-            formularioUsuarioEdit.querySelector('.email').value = data.email
-            formularioUsuarioEdit.querySelector('.password').value = data.password
+            formularioViajeEdit.querySelector('.id').value = id
+            formularioViajeEdit.querySelector('.nombre').value = data.nombre
+            formularioViajeEdit.querySelector('.apellido').value = data.apellido
+            formularioViajeEdit.querySelector('.email').value = data.email
+            formularioViajeEdit.querySelector('.password').value = data.password
 
         })
-        var bottomEdit = document.getElementById('editarUsuario')
+        var bottomEdit = document.getElementById('editarViaje')
         bottomEdit.addEventListener('click', function(e){
             e.preventDefault();
             ejecutarEdit(id)
         });
         function ejecutarEdit(id){
-            var formularioUsuarioEdit = document.getElementById('editUsuarioForm');
-            var datos = new FormData(formularioUsuarioEdit);
+            var formularioViajeEdit = document.getElementById('editViajeForm');
+            var datos = new FormData(formularioViajeEdit);
             let jsonDataConvertEdit = JSON.stringify(
                 {
                     nombre: datos.get('nombre'),
@@ -215,7 +217,7 @@ function editUsuario(id){
                     roll: new Number(document.getElementById("editroll").value)
                 }               
             );
-            fetch(msusuario+`${id}`, {
+            fetch(msViaje+`${id}`, {
                 method: 'PUT',
                 body: jsonDataConvertEdit,
                 headers: myHeaders,
@@ -224,22 +226,45 @@ function editUsuario(id){
                 .then(res => res.json())
                 .then(datos => {
                     console.log(datos)
-                    alert("usuario editado")
+                    alert("Viaje editado")
                     location.reload()
                 })
             }
   };
 
-// eliminar usuario 
-function deliteUsuario(id){
-  fetch(msusuario+`${id}`, {
+// eliminar Viaje 
+function deliteViaje(id){
+  fetch(msViaje+`${id}`, {
     method: 'DELETE',
     headers: myHeaders,
 })
     .then(res => res.json())
     .then(datos => {
         console.log(datos)
-        alert("usuario eliminado")
+        alert("Viaje eliminado")
         location.reload()
     })
 };
+
+function tipoViaje(id){
+    fetch( mstipoViaje+`${id}?idTipoViaje=${id}`, {
+        method: 'GET',
+        headers: myHeaders,
+    })
+        .then(res => res.json())
+        .then(datos => {
+            console.log(datos)
+            
+        })
+}
+function terminal(id){
+    fetch( msterminal+`GetTerminalById/${id}`, {
+        method: 'GET',
+        headers: myHeaders,
+    })
+        .then(res => res.json())
+        .then(datos => {
+            console.log(datos)
+            return datos
+        })
+}
