@@ -1,7 +1,7 @@
 crear rama
-git checkout "nombre_de_rama_sin_comillas"
+git branch "nombre_de_rama_sin_comillas"
 
-ver remas
+ver ramas
 git branch
 
 selecionar rama
