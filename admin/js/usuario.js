@@ -25,7 +25,9 @@ function pintar(){
 function usuarios(data) {
     usuario.innerHTML = ''
     usuario.innerHTML = `
-
+    <div class="row">
+    <h3>Usuarios</h3>
+      </div>
 <div class="row justify-content-center align-items-center">
 <table class="table">
     <thead>
@@ -165,7 +167,7 @@ function empleados() {
 }
 function tablaEmpleado(datos){
 
-    empleado.innerHTML = `
+    usuario.innerHTML = `
     <div class="row">
     <h3>Empleado</h3>
       </div>
@@ -196,7 +198,7 @@ var tabla = document.querySelector('#tbodyEmpleado')
         <td>${valor.fechaNacimiento}</td>
         <td>${valor.legajo}</td>
         <td>${valor.sueldo}</td>
-        <td>${valor.user.email}</td>
+        <td>${valor.user[0].email}</td>
         <td>
             <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editarUsuarioModal" onclick="editEmpleado(${valor.empleadoId})">Editar</button>
             <button type="button" class="btn btn-outline-danger" onclick="deliteEmpleado(${valor.empleadoId})">Borrar</button>
@@ -219,7 +221,7 @@ function pasajeros() {
 }
 function tablaPasajero(datos){
 
-    pasajero.innerHTML = `
+    usuario.innerHTML = `
     <div class="row">
     <h3>Pasajero</h3>
       </div>
@@ -246,7 +248,7 @@ var tabla = document.querySelector('#tbodyPasajero')
         <td>${valor.dni}</td>
         <td>${valor.telefono}</td>
         <td>${valor.fechaNacimiento}</td>
-        <td>${valor.user.email}</td>
+        <td>${valor.user[0].email}</td>
         <td>
             <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editarUsuarioModal" onclick="editEmpleado(${valor.pasajeroId})">Editar</button>
             <button type="button" class="btn btn-outline-danger" onclick="deliteEmpleado(${valor.pasajeroId})">Borrar</button>
@@ -255,3 +257,23 @@ var tabla = document.querySelector('#tbodyPasajero')
     `
     }
 }
+function agregarEmpleadoPasajero(id){
+
+}
+var buscador = document.getElementById('buscarByEmail');
+buscador.addEventListener('submit', function (e) {
+    e.preventDefault()
+    console.log(buscador)
+var email = 'juan@gmail.com'
+    fetch(msusuario+`?email=${email}`, {
+        method: 'GET',
+        headers: myHeaders,
+        
+    })
+        .then(res => res.json())
+        .then(datos => {
+            console.log(datos)
+            // alert("usuario creado")
+            // location.reload()
+        })
+})
