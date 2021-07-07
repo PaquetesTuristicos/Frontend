@@ -23,13 +23,15 @@ function pintar(){
     })
         .then(res => res.json())
         .then(datos => {
+            limpiar(usuario)
+            limpiar(empleado)
+            limpiar(pasajero)
             usuarios(datos,usuario)
         })
 }
 // carga datos en pantalla 
 function usuarios(data,tabla) {
-    limpiar(pasajero)
-    limpiar(empleado)
+    
     tabla.innerHTML = ''
     tabla.innerHTML = `
     <div class="row">
@@ -44,7 +46,7 @@ function usuarios(data,tabla) {
         <th scope="col">Apellido</th>
         <th scope="col">Email</th>
         <th scope="col">Roll</th>
-        <th scope="col">accion</th>
+        <th scope="col">Accion</th>
       </tr>
     </thead>
     <tbody id="tbodyUsuario">
@@ -61,6 +63,7 @@ var tabla = document.querySelector('#tbodyUsuario')
         <td>${valor.email}</td>
         <td>${valor.roll.nombre}</td>
         <td>
+            <button type="button" class="btn btn-outline-warning"  data-bs-toggle="modal" data-bs-target="#AgregarDatosModal" onclick="agregarEmpleadoPasajero(${valor.userId})">Agregar</button>
             <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editarUsuarioModal" onclick="editUsuario(${valor.userId})">Editar</button>
             <button type="button" class="btn btn-outline-danger" onclick="deliteUsuario(${valor.userId})">Borrar</button>
         </td>
@@ -162,15 +165,55 @@ function deliteUsuario(id){
 };
 // empleado 
 function empleados() {
-    console.log('empleado')
     fetch(msempleado, {
         method: 'GET',
         headers: myHeaders,
     })
         .then(res => res.json())
         .then(datos => {
+            limpiar(empleado)
+            limpiar(pasajero)
             tablaEmpleado(datos,usuario)
         })
+}
+function tablaUsuarios(data,tabla) {
+    
+    tabla.innerHTML = ''
+    tabla.innerHTML = `
+    <div class="row">
+    <h3>Usuarios</h3>
+      </div>
+<div class="row justify-content-center align-items-center">
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellido</th>
+        <th scope="col">Email</th>
+        <th scope="col">Roll</th>
+        <th scope="col">Accion</th>
+      </tr>
+    </thead>
+    <tbody id="tbodyUsuario">
+    </tbody>
+    </table>
+</div>`
+var tabla = document.querySelector('#tbodyUsuario')
+    for (let valor of data) {
+        tabla.innerHTML += `
+        <tr>
+        <th scope="row">${valor.userId}</th>
+        <td>${valor.nombre}</td>
+        <td>${valor.apellido}</td>
+        <td>${valor.email}</td>
+        <td>${valor.roll.nombre}</td>
+        <td>
+            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editarUsuarioModal" onclick="editUsuario(${valor.userId})">Editar</button>
+            <button type="button" class="btn btn-outline-danger" onclick="deliteUsuario(${valor.userId})">Borrar</button>
+        </td>
+      </tr>`
+    }
 }
 function tablaEmpleado(datos,tabla){
 
@@ -189,7 +232,7 @@ function tablaEmpleado(datos,tabla){
         <th scope="col">Legajo</th>
         <th scope="col">Sueldo</th>
         <th scope="col">Email</th>
-        <th scope="col">accion</th>
+        <th scope="col">Accion</th>
       </tr>
     </thead>
     <tbody id="tbodyEmpleado">
@@ -217,13 +260,14 @@ var tabla = document.querySelector('#tbodyEmpleado')
 }
 // Pasajero 
 function pasajeros() {
-    console.log('empleado')
     fetch(mspasajero, {
         method: 'GET',
         headers: myHeaders,
     })
         .then(res => res.json())
         .then(datos => {
+            limpiar(empleado)
+            limpiar(pasajero)
             tablaPasajero(datos,usuario)
         })
 }
@@ -267,25 +311,67 @@ var tabla = document.querySelector('#tbodyPasajero')
     }
 }
 function agregarEmpleadoPasajero(id){
-
+    var agregarDatos = document.getElementById('agregarDatosForm');
+    fetch(msusuario+`${id}`, {
+        method: 'GET',
+        headers: myHeaders,
+    })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            agregarDatos.querySelector('.id').value = id
+            agregarDatos.querySelector('.email').value = data.email
+        })
+        var bottomAgregar = document.getElementById('agregarDatos')
+        bottomAgregar.addEventListener('click', function(e){
+            e.preventDefault();
+            ejecutarAgregar(id)
+        });
+        function ejecutarAgregar(id){
+            var agregarDatos = document.getElementById('agregarDatosForm');
+            var datos = new FormData(agregarDatos);
+            let jsonDataConvertAgregar = JSON.stringify(
+                {
+                    dni: new Number(datos.get('dni')),
+                    telefono: new Number(datos.get('telefono')),
+                    fechaNacimiento: datos.get('fechaNacimiento'),
+                    legajo: new Number(datos.get('legajo')),
+                    sueldo: new Number(datos.get('sueldo')),
+                    userId: new Number(datos.get('id')),
+                }               
+            );
+            fetch(msempleado, {
+                method: 'POST',
+                body: jsonDataConvertAgregar,
+                headers: myHeaders,
+                
+            })
+                .then(res => res.json())
+                .then(datos => {
+                    console.log(datos)
+                    alert("datos agregados")
+                    location.reload()
+                })
+            }
 }
 var buscador = document.getElementById('buscarByEmail');
 buscador.addEventListener('submit', function (e) {
     e.preventDefault()
-    console.log(buscador)
     var email = document.querySelector("#emailId").value
-    console.log(emailId)
+    if(email === ""){
+        limpiar(empleado)
+        limpiar(pasajero)
+        limpiar(usuario)
+        pintar()
+    }else{
     fetch(msusuario+`?email=${email}`, {
         method: 'GET',
-        headers: myHeaders,
-        
+        headers: myHeaders,    
     })
         .then(res => res.json())
         .then(datos => {
-            console.log(datos)
-            // alert("usuario creado")
-            // location.reload()
-            usuarios(datos,usuario)
+            limpiar(usuario)
+            tablaUsuarios(datos,usuario)
         })
         fetch(msempleado+`?email=${email}`, {
         method: 'GET',
@@ -294,9 +380,7 @@ buscador.addEventListener('submit', function (e) {
     })
         .then(res => res.json())
         .then(datos => {
-            console.log(datos)
-            // alert("usuario creado")
-            // location.reload()
+            limpiar(empleado)
             tablaEmpleado(datos,empleado)
         })
         fetch(mspasajero+`?email=${email}`, {
@@ -306,9 +390,9 @@ buscador.addEventListener('submit', function (e) {
     })
         .then(res => res.json())
         .then(datos => {
-            console.log(datos)
-            // alert("usuario creado")
-            // location.reload()
+            limpiar(pasajero)
             tablaPasajero(datos,pasajero)
         })
+
+    }
 })
