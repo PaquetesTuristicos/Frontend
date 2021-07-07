@@ -10,6 +10,11 @@ var mspasajero = `https://localhost:44384/api/pasajero/`
 var usuario = document.querySelector('#contenido')
 var empleado = document.querySelector('#contenidoEmpleado')
 var pasajero = document.querySelector('#contenidoPasajero')
+
+
+function limpiar(tabla){
+    tabla.innerHTML = ''
+}
 pintar()
 function pintar(){
     fetch(msusuario, {
@@ -18,13 +23,15 @@ function pintar(){
     })
         .then(res => res.json())
         .then(datos => {
-            usuarios(datos)
+            usuarios(datos,usuario)
         })
 }
 // carga datos en pantalla 
-function usuarios(data) {
-    usuario.innerHTML = ''
-    usuario.innerHTML = `
+function usuarios(data,tabla) {
+    limpiar(pasajero)
+    limpiar(empleado)
+    tabla.innerHTML = ''
+    tabla.innerHTML = `
     <div class="row">
     <h3>Usuarios</h3>
       </div>
@@ -162,12 +169,13 @@ function empleados() {
     })
         .then(res => res.json())
         .then(datos => {
-            tablaEmpleado(datos)
+            tablaEmpleado(datos,usuario)
         })
 }
-function tablaEmpleado(datos){
+function tablaEmpleado(datos,tabla){
 
-    usuario.innerHTML = `
+    tabla.innerHTML = ''
+    tabla.innerHTML = `
     <div class="row">
     <h3>Empleado</h3>
       </div>
@@ -216,12 +224,13 @@ function pasajeros() {
     })
         .then(res => res.json())
         .then(datos => {
-            tablaPasajero(datos)
+            tablaPasajero(datos,usuario)
         })
 }
-function tablaPasajero(datos){
+function tablaPasajero(datos,tabla){
 
-    usuario.innerHTML = `
+    tabla.innerHTML = ''
+    tabla.innerHTML = `
     <div class="row">
     <h3>Pasajero</h3>
       </div>
@@ -264,7 +273,8 @@ var buscador = document.getElementById('buscarByEmail');
 buscador.addEventListener('submit', function (e) {
     e.preventDefault()
     console.log(buscador)
-var email = 'juan@gmail.com'
+    var email = document.querySelector("#emailId").value
+    console.log(emailId)
     fetch(msusuario+`?email=${email}`, {
         method: 'GET',
         headers: myHeaders,
@@ -275,5 +285,30 @@ var email = 'juan@gmail.com'
             console.log(datos)
             // alert("usuario creado")
             // location.reload()
+            usuarios(datos,usuario)
+        })
+        fetch(msempleado+`?email=${email}`, {
+        method: 'GET',
+        headers: myHeaders,
+        
+    })
+        .then(res => res.json())
+        .then(datos => {
+            console.log(datos)
+            // alert("usuario creado")
+            // location.reload()
+            tablaEmpleado(datos,empleado)
+        })
+        fetch(mspasajero+`?email=${email}`, {
+        method: 'GET',
+        headers: myHeaders,
+        
+    })
+        .then(res => res.json())
+        .then(datos => {
+            console.log(datos)
+            // alert("usuario creado")
+            // location.reload()
+            tablaPasajero(datos,pasajero)
         })
 })
