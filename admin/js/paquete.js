@@ -3,6 +3,7 @@
 var mspaquete = `https://localhost:44341/api/paquetes/`
 var mstipopaquete = `https://localhost:44341/api/tipopaquetes/`
 var msterminal = `https://localhost:44341/api/terminal/`
+var mshoteles = `https://localhost:44341/api/hoteles/`
 
 var paquete = document.querySelector('#contenido')
 pintar()
@@ -16,102 +17,26 @@ function pintar(){
             paquetes(datos)
         })
 }
+
+function pintarHoteles(){
+    fetch(mshoteles, {
+        method: 'GET',
+        headers: myHeaders,
+    })
+        .then(res => res.json())
+        .then(datos => {
+            hoteles(datos)
+        })
+}
 // carga datos en pantalla 
 function paquetes(data) {
     paquete.innerHTML = ''
-    paquete.innerHTML = `<div>
-    <div>
-        <H3>paquetes</H3>
-    </div>
-</div>
-<div>
-<div>
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#cargarpaqueteModal">
-Nuevo paquete
-</button>   
-<!-- Modal -->
-<div class="modal fade" id="cargarpaqueteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Nuevo paquete</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="cargarpaqueteForm">                   
-                    <input type="text" name="nombre" placeholder="Ingresa nombre" class="form-control my-3" required />
-                    <input type="text" name="descripcion" placeholder="Ingresa descripcion" class="form-control my-3" required />
-                    <input type="text" name="fechasalida" placeholder="Ingresa fechasalida" class="form-control my-3" required />
-                    <input type="text" name="fechavuelta" placeholder="Ingresa fechavuelta" class="form-control my-3" required />
-                    <input type="text" name="totalnoches" placeholder="Ingresa totalnoches" class="form-control my-3" required />
-                    <input type="number" name="precio" placeholder="Ingresa precio" class="form-control my-3" required />
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" onclick="createpaquete()">Crear</button>
-                    </div>
-                </form>
-                <div class="mt-3" id="cargarpaqueteRespuesta">
-
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
-<!-- Modal editar -->
-<div class="modal fade" id="editarpaqueteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Editar paquete</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="editpaqueteForm">
-                <input type="number" name="id" placeholder="" class="form-control my-3 id" required />
-                    <input type="text" name="nombre" placeholder="Ingresa Nombre" class="form-control my-3 nombre" required />
-                    <input type="text" name="apellido" placeholder="Ingresa Apellido" class="form-control my-3 apellido" required />
-                    <input type="text" name="email" placeholder="Ingresa Email" class="form-control my-3 email" required />
-                    <input type="text" name="password" placeholder="Ingresa Password" class="form-control my-3 password" required />
-                    <div class="col-md-4">
-                        <label for="inputState" class="form-label">Tipo</label>
-                        <select id="editroll" class="form-select selectRoll" required>
-                            <option selected value="">Seleccione Roll...</option>
-                            <option type="text" value="1" id="1">Administrador</option>
-                            <option type="text" value="2" id="2">Empleado</option>
-                            <option type="text" value="3" id="3">Cliente</option>
-                        </select>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button id="editarpaquete" type="button" class="btn btn-primary">Editar</button>
-                    </div>
-                </form>
-                <div class="mt-3" id="editarpaqueteRespuesta">
-
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
-        <button type="button" class="btn btn-primary">Buscar paquete</button>
-      
-        <div class="btn-group" role="group">
-          <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            Configuracion
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-            <li><a class="dropdown-item" href="#">nose</a></li>
-            <li><a class="dropdown-item" href="#">definir</a></li>
-          </ul>
-        </div>
-      
-</div>
-</div>
+    paquete.innerHTML = `
+    <div class="row">
+    <h3>Paquetes</h3>
+      </div>
 <div class="row justify-content-center align-items-center">
-<table class="table">
+<table  id="regTable" class="table">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -265,4 +190,46 @@ function terminal(id){
             console.log(datos)
             return datos
         })
+}
+
+
+function hoteles(data) {
+    paquete.innerHTML = ''
+    paquete.innerHTML = `
+    <div class="row">
+    <h3>Paquetes</h3>
+      </div>
+<div class="row justify-content-center align-items-center">
+<table  id="regTable" class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">marca</th>
+        <th scope="col">sucursal</th>
+        <th scope="col">estrellas</th>
+        <th scope="col">bloqueado</th>
+        <th scope="col">idDireccion</th>
+        <th scope="col">accion</th>
+      </tr>
+    </thead>
+    <tbody id="tbodypaquete">
+    </tbody>
+    </table>
+</div>`
+var tabla = document.querySelector('#tbodypaquete')
+    for (let valor of data) {
+        tabla.innerHTML += `
+        <tr>
+        <th scope="row">${valor.id}</th>
+        <td>${valor.marca}</td>
+        <td>${valor.sucursal}</td>
+        <td>${valor.estrellas}</td>
+        <td>${valor.bloqueado}</td>
+        <td>${valor.idDireccion}</td>
+        <td>
+            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editarpaqueteModal" onclick="editpaquete(${valor.id})">Editar</button>
+            <button type="button" class="btn btn-outline-danger" onclick="delitepaquete(${valor.id})">Borrar</button>
+        </td>
+      </tr>`
+    }
 }

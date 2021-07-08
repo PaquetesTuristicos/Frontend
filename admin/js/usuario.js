@@ -249,7 +249,7 @@ var tabla = document.querySelector('#tbodyEmpleado')
         <td>${valor.fechaNacimiento}</td>
         <td>${valor.legajo}</td>
         <td>${valor.sueldo}</td>
-        <td>${valor.user[0].email}</td>
+        <td>${valor.user.email}</td>
         <td>
             <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editarUsuarioModal" onclick="editEmpleado(${valor.empleadoId})">Editar</button>
             <button type="button" class="btn btn-outline-danger" onclick="deliteEmpleado(${valor.empleadoId})">Borrar</button>
@@ -301,7 +301,7 @@ var tabla = document.querySelector('#tbodyPasajero')
         <td>${valor.dni}</td>
         <td>${valor.telefono}</td>
         <td>${valor.fechaNacimiento}</td>
-        <td>${valor.user[0].email}</td>
+        <td>${valor.user.email}</td>
         <td>
             <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editarUsuarioModal" onclick="editEmpleado(${valor.pasajeroId})">Editar</button>
             <button type="button" class="btn btn-outline-danger" onclick="deliteEmpleado(${valor.pasajeroId})">Borrar</button>
