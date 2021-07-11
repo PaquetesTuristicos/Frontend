@@ -208,7 +208,7 @@ function excursiones(data) {
     paquete.innerHTML = ''
     paquete.innerHTML = `
     <div class="row">
-    <h3>Paquetes</h3>
+    <h3>Excursiones</h3>
       </div>
 <div class="row justify-content-center align-items-center">
 <table  id="regTable" class="table">
@@ -252,7 +252,7 @@ function hoteles(data) {
     paquete.innerHTML = ''
     paquete.innerHTML = `
     <div class="row">
-    <h3>Paquetes</h3>
+    <h3>Hoteles</h3>
       </div>
 <div class="row justify-content-center align-items-center">
 <table  id="regTable" class="table">
