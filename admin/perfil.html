@@ -32,7 +32,7 @@
     
 
 <main>
-  <h1 class="visually-hidden">Splinter Panel</h1>
+    <h1 class="visually-hidden">Splinter Panel</h1>
 
   
 
@@ -42,46 +42,46 @@
       <span class="fs-4">Splinter Panel</span>
     </a>
     <hr>
-    <button><a href="../index.html">Sitio Web</a></button>
+    <button><a href="http://localhost/paquetes/Frontend/">Sitio Web</a></button>
     <ul class="nav nav-pills flex-column mb-auto">
       <li class="nav-item">
-        <a id="bottomInicio" href="#" class="nav-link active" aria-current="page">
+        <a id="bottomInicio" href="index.html" class="nav-link text-white" aria-current="page">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
           Inicio
         </a>
       </li>
       <li>
-        <a id="bottomPanel" href="../panel/index.html" class="nav-link text-white">
+        <a id="bottomPanel" href="panel/index.html" class="nav-link text-white">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
           Panel
         </a>
       </li>
       <li>
-        <a id="bottomReservas" href="../reserva/index.html" class="nav-link text-white">
+        <a id="bottomReservas" href="reserva/index.html" class="nav-link text-white">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"/></svg>
           Reservas
         </a>
       </li>
       <li>
-        <a id="bottomPaquetes" href="../paquete/index.html" class="nav-link text-white">
+        <a id="bottomPaquetes" href="paquete/index.html" class="nav-link text-white">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
           Paquetes
         </a>
       </li>
       <li>
-        <a id="bottomViajes" href="../viaje/index.html" class="nav-link text-white">
+        <a id="bottomViajes" href="viaje/index.html" class="nav-link text-white">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
           Viajes
         </a>
       </li>
       <li>
-        <a id="bottomTransporte" href="../transporte/index.html" class="nav-link text-white">
+        <a id="bottomTransporte" href="transporte/index.html" class="nav-link text-white">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
           Transportes
         </a>
       </li>
       <li>
-        <a id="bottomUsuario" href="usuario/index.html" class="nav-link text-white">
+        <a id="bottomUsuario" href="usuario/index.html" class="nav-link active">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
           Usuarios
         </a>
@@ -103,11 +103,40 @@
 
   <div class="b-example-divider"></div>
 
-<!-- Contenido  -->
 
-<div id="contenido" class="container">
-    
+    <div id="contenido"></div>
+
+<script>
+var user = localStorage.getItem('username')
+var apellido = localStorage.getItem('apellido')
+var nombre = localStorage.getItem('nombre')
+var token = localStorage.getItem('token')
+var id = localStorage.getItem('id')
+var perfil = document.querySelector('#contenido')
+function pintar(){
+    perfil.innerHTML = ''
+    perfil.innerHTML = `
+    <div class="row">
+    <h3 class="text-center">Perfil</h3>
+      </div>
+      <div class="container">
+      <div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">${user}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">${apellido} ${nombre}</h6>
+    <p class="card-text">${token}</p>
+    <a href="#" class="card-link">${id}</a>
+  </div>
 </div>
+</div>
+
+`
+}
+
+pintar()
+</script>
+
+
 </main>
 <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script> -->
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

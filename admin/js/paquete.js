@@ -4,10 +4,11 @@ var mspaquete = `https://localhost:44341/api/paquetes/`
 var mstipopaquete = `https://localhost:44341/api/tipopaquetes/`
 var msterminal = `https://localhost:44341/api/terminal/`
 var mshoteles = `https://localhost:44341/api/hoteles/`
+var msexcursion = `https://localhost:44341/api/Excursion/`
 
 var paquete = document.querySelector('#contenido')
-pintar()
-function pintar(){
+pintarPaquetes()
+function pintarPaquetes(){
     fetch(mspaquete, {
         method: 'GET',
         headers: myHeaders,
@@ -26,6 +27,17 @@ function pintarHoteles(){
         .then(res => res.json())
         .then(datos => {
             hoteles(datos)
+        })
+}
+
+function pintarExcursiones(){
+    fetch(msexcursion, {
+        method: 'GET',
+        headers: myHeaders,
+    })
+        .then(res => res.json())
+        .then(datos => {
+            excursiones(datos)
         })
 }
 // carga datos en pantalla 
@@ -78,13 +90,13 @@ function createpaquete(){
     var formulariopaqueteCargar = document.getElementById('cargarpaqueteForm');
     var paqueteRespuestaCargar = document.getElementById('cargarpaqueteRespuesta');
     var datos = new FormData(formulariopaqueteCargar);
+    console.log(datos)
     let jsonDataConvert = JSON.stringify(
         {
             nombre: datos.get('nombre'),
             descripcion: datos.get('descripcion'),
             fechasalida: datos.get('fechasalida'),
             fechavuelta: datos.get('fechavuelta'),
-            totalnoches: new Number(datos.get('totalnoches')),
             precio: new Number(datos.get('precio')),
             descuento: new Number(datos.get('descuento')),
         }               
@@ -190,6 +202,49 @@ function terminal(id){
             console.log(datos)
             return datos
         })
+}
+
+function excursiones(data) {
+    paquete.innerHTML = ''
+    paquete.innerHTML = `
+    <div class="row">
+    <h3>Paquetes</h3>
+      </div>
+<div class="row justify-content-center align-items-center">
+<table  id="regTable" class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">titulo</th>
+        <th scope="col">descripcion</th>
+        <th scope="col">precio</th>
+        <th scope="col">bloqueada</th>
+        <th scope="col">destinoExcursiones</th>
+        <th scope="col">reservaExcursiones</th>
+        <th scope="col">accion</th>
+      </tr>
+    </thead>
+    <tbody id="tbodypaquete">
+    </tbody>
+    </table>
+</div>`
+var tabla = document.querySelector('#tbodypaquete')
+    for (let valor of data) {
+        tabla.innerHTML += `
+        <tr>
+        <th scope="row">${valor.id}</th>
+        <td>${valor.titulo}</td>
+        <td>${valor.descripcion}</td>
+        <td>${valor.precio}</td>
+        <td>${valor.bloqueada}</td>
+        <td>${valor.destinoExcursiones}</td>
+        <td>${valor.reservaExcursiones}</td>
+        <td>
+            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editarpaqueteModal" onclick="editpaquete(${valor.id})">Editar</button>
+            <button type="button" class="btn btn-outline-danger" onclick="delitepaquete(${valor.id})">Borrar</button>
+        </td>
+      </tr>`
+    }
 }
 
 

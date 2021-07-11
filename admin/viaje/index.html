@@ -94,7 +94,7 @@
         <strong id="empleado"></strong>
       </a>
       <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-        <li><a class="dropdown-item" href="http://localhost/paquetes/Frontend/admin/Paquete/perfil.html">Perfil</a></li>
+        <li><a class="dropdown-item" href="http://localhost/paquetes/Frontend/admin/perfil.html">Perfil</a></li>
         <li><hr class="dropdown-divider"></li>
         <li><a class="dropdown-item" href="#" onclick=salir()>Salir</a></li>
       </ul>
@@ -126,19 +126,11 @@
                   </div>
                   <div class="modal-body">
                       <form id="cargarViajeForm">                   
-                          <input type="text" name="fechaIda" placeholder="Ingresa fechaIda" class="form-control my-3" required />
-                          <input type="text" name="fechaVuelta" placeholder="Ingresa fechaVuelta" class="form-control my-3" required />
-                          <input type="text" name="excursion" placeholder="Ingresa excursion" class="form-control my-3" required />
-                          <input type="text" name="hora" placeholder="Ingresa hora" class="form-control my-3" required />
-                          <div class="col-md-4">
-                              <label for="inputState" class="form-label">Tipo</label>
-                              <select id="roll" class="form-select selectRoll" required>
-                                  <option selected value="">Seleccione Roll...</option>
-                                  <option type="text" value="1" id="1">Administrador</option>
-                                  <option type="text" value="2" id="2">Empleado</option>
-                                  <option type="text" value="3" id="3">Cliente</option>
-                              </select>
-                          </div>
+                          <input type="datetime-local" name="fechaHoraSalida" placeholder="Ingresa fechaHoraSalida" class="form-control my-3" required />
+                          <input type="number" name="tipoViajeId" placeholder="Ingresa tipoViajeId" class="form-control my-3" required />
+                          <input type="number" name="terminalOrigenId" placeholder="Ingresa terminalOrigenId" class="form-control my-3" required />
+                          <input type="number" name="terminalDestinoId" placeholder="Ingresa terminalDestinoId" class="form-control my-3" required />
+                          <input type="number" name="paqueteId" placeholder="Ingresa paqueteId" class="form-control my-3" required />
                           <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                               <button type="button" class="btn btn-primary" onclick="createViaje()">Crear</button>
@@ -189,15 +181,15 @@
               </div>
           </div>
       </div>
-              <button type="button" class="btn btn-primary">Buscar Viaje</button>
             
               <div class="btn-group" role="group">
                 <button id="btnGroupDrop1" type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                   Datos
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                  <li><a class="dropdown-item" href="#">Terminal</a></li>
-                  <li><a class="dropdown-item" href="#">Coordinador</a></li>
+                  <li><a class="dropdown-item" href="#" onclick="pintarViajes()">Viajes</a></li>
+                  <li><a class="dropdown-item" href="#"onclick="pintarTerminales()">Terminal</a></li>
+                  <li><a class="dropdown-item" href="#" onclick="pintarCoordinadores()">Coordinador</a></li>
                 </ul>
               </div>
             

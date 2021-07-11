@@ -3,21 +3,44 @@
 var msViaje = `https://localhost:44385/api/viajes/`
 var mstipoViaje = `https://localhost:44385/api/tipoviajes/`
 var msterminal = `https://localhost:44385/api/terminal/`
+var mscoordinadores = `https://localhost:44385/api/coordinadores/`
 
 var Viaje = document.querySelector('#contenido')
-pintar()
-function pintar(){
+pintarViajes()
+function pintarViajes(){
     fetch(msViaje, {
         method: 'GET',
         headers: myHeaders,
     })
         .then(res => res.json())
         .then(datos => {
-            Viajes(datos)
+            viajes(datos)
+        })
+}
+
+function pintarTerminales(){
+    fetch(msterminal, {
+        method: 'GET',
+        headers: myHeaders,
+    })
+        .then(res => res.json())
+        .then(datos => {
+            terminales(datos)
+        })
+}
+
+function pintarCoordinadores(){
+    fetch(mscoordinadores, {
+        method: 'GET',
+        headers: myHeaders,
+    })
+        .then(res => res.json())
+        .then(datos => {
+            coordinadores(datos)
         })
 }
 // carga datos en pantalla 
-function Viajes(data) {
+function viajes(data) {
     Viaje.innerHTML = ''
     Viaje.innerHTML = `
     <div class="row">
@@ -59,6 +82,84 @@ var tabla = document.querySelector('#tbodyViaje')
       </tr>`
     }
 }
+
+// carga datos en pantalla Terminal
+function terminales(data) {
+    Viaje.innerHTML = ''
+    Viaje.innerHTML = `
+    <div class="row">
+    <h3>Terminales</h3>
+      </div>
+<div class="row justify-content-center align-items-center">
+<table id="regTable" class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">nombre</th>
+        <th scope="col">descripcion</th>
+        <th scope="col">Accion</th>
+      </tr>
+    </thead>
+    <tbody id="tbodyViaje">
+    </tbody>
+    </table>
+</div>`
+var tabla = document.querySelector('#tbodyViaje')
+    for (let valor of data) {
+        tabla.innerHTML += `
+        <tr>
+        <th scope="row">${valor.terminalId}</th>
+        <td>${valor.nombre}</td>
+        <td>${valor.descripcion}</td>
+        <td>
+            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editarViajeModal" onclick="editViaje(${valor.userId})">Editar</button>
+            <button type="button" class="btn btn-outline-danger" onclick="deliteViaje(${valor.terminalId})">Borrar</button>
+        </td>
+      </tr>`
+    }
+}
+
+// carga datos en pantalla Coordinadores
+function coordinadores(data) {
+    Viaje.innerHTML = ''
+    Viaje.innerHTML = `
+    <div class="row">
+    <h3>Coordinadores</h3>
+      </div>
+<div class="row justify-content-center align-items-center">
+<table id="regTable" class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">nombre</th>
+        <th scope="col">apellido</th>
+        <th scope="col">contacto</th>
+        <th scope="col">email</th>
+        <th scope="col">agenda</th>
+        <th scope="col">Accion</th>
+      </tr>
+    </thead>
+    <tbody id="tbodyViaje">
+    </tbody>
+    </table>
+</div>`
+var tabla = document.querySelector('#tbodyViaje')
+    for (let valor of data) {
+        tabla.innerHTML += `
+        <tr>
+        <th scope="row">${valor.coordinadorId}</th>
+        <td>${valor.nombre}</td>
+        <td>${valor.apellido}</td>
+        <td>${valor.contacto}</td>
+        <td>${valor.email}</td>
+        <td>${valor.agenda}</td>
+        <td>
+            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editarViajeModal" onclick="editViaje(${valor.userId})">Editar</button>
+            <button type="button" class="btn btn-outline-danger" onclick="deliteViaje(${valor.coordinadorId})">Borrar</button>
+        </td>
+      </tr>`
+    }
+}
 //crear Viaje 
 function createViaje(){  
     var formularioViajeCargar = document.getElementById('cargarViajeForm');
@@ -66,11 +167,11 @@ function createViaje(){
     var datos = new FormData(formularioViajeCargar);
     let jsonDataConvert = JSON.stringify(
         {
-            nombre: datos.get('nombre'),
-            apellido: datos.get('apellido'),
-            email: datos.get('email'),
-            password: datos.get('password'),
-            roll: new Number(document.getElementById("roll").value)
+            fechaHoraSalida: datos.get('fechaHoraSalida'),
+            tipoViajeId: new Number(datos.get('tipoViajeId')),
+            terminalOrigenId: new Number(datos.get('terminalOrigenId')),
+            terminalDestinoId: new Number(datos.get('terminalDestinoId')),
+            paqueteId: new Number(datos.get('paqueteId'))
         }               
     );
     console.log(jsonDataConvert)
