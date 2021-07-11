@@ -37,6 +37,37 @@ function pintarChofer(){
         })
 }
 
+//crear transporte 
+function createBus(){  
+  var formularioBusCargar = document.getElementById('cargarBusForm');
+  var paqueteRespuestaCargar = document.getElementById('cargarpaqueteRespuesta');
+  var datos = new FormData(formularioBusCargar);
+  console.log(datos)
+  let jsonDataConvert = JSON.stringify(
+      {
+        numero: datos.get('numero'),
+        patente: datos.get('patente'),     
+        capacidad: new Number(datos.get('capacidad')),
+        empresaId: new Number(datos.get('empresaId')),
+        observacion: datos.get('observacion'),
+      }               
+  );
+  console.log(jsonDataConvert)
+
+  fetch(msBus, {
+      method: 'POST',
+      body: jsonDataConvert,
+      headers: myHeaders,
+      
+  })
+      .then(res => res.json())
+      .then(datos => {
+          console.log(datos)
+          alert("Bus creado")
+          location.reload()
+      })
+}
+
 // carga datos en pantalla 
 function Bus(data) {
     bus.innerHTML = ''
