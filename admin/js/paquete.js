@@ -5,6 +5,7 @@ var mstipopaquete = `https://localhost:44341/api/tipopaquetes/`
 var msterminal = `https://localhost:44341/api/terminal/`
 var mshoteles = `https://localhost:44341/api/hoteles/`
 var msexcursion = `https://localhost:44341/api/Excursion/`
+var msdestinos = `https://localhost:44341/api/destino/`
 
 var paquete = document.querySelector('#contenido')
 pintarPaquetes()
@@ -38,6 +39,17 @@ function pintarExcursiones(){
         .then(res => res.json())
         .then(datos => {
             excursiones(datos)
+        })
+}
+
+function pintarDestinos(){
+    fetch(msdestinos, {
+        method: 'GET',
+        headers: myHeaders,
+    })
+        .then(res => res.json())
+        .then(datos => {
+            destinos(datos)
         })
 }
 // carga datos en pantalla 
@@ -281,6 +293,90 @@ var tabla = document.querySelector('#tbodypaquete')
         <td>${valor.estrellas}</td>
         <td>${valor.bloqueado}</td>
         <td>${valor.idDireccion}</td>
+        <td>
+            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editarpaqueteModal" onclick="editpaquete(${valor.id})">Editar</button>
+            <button type="button" class="btn btn-outline-danger" onclick="delitepaquete(${valor.id})">Borrar</button>
+        </td>
+      </tr>`
+    }
+}
+
+function destinos(data) {
+    paquete.innerHTML = ''
+    paquete.innerHTML = `
+    <div class="row">
+    <h3>Destinos</h3>
+      </div>
+
+      <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#cargarPaqueteModal">
+      Nuevo Destinos
+      </button>  
+      <!-- Modal -->
+      <div class="modal fade" id="cargarPaqueteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Nuevo Paquete</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                      <form id="cargarpaqueteForm">                   
+                          <input type="text" name="nombre" placeholder="Ingresa Nombre" class="form-control my-3" required />
+                          <input type="text" name="descripcion" placeholder="Ingresa descripcion" class="form-control my-3" required />
+                          <label class="form-label">fecha de salida</label>
+                          <input type="datetime-local" name="fechasalida" placeholder="Ingresa fecha de salida" class="form-control my-3" required />
+                          <label class="form-label">fecha de vuelta</label>
+                          <input type="datetime-local" name="fechavuelta" placeholder="Ingresa fecha de vuelta" class="form-control my-3" required />
+                          <input type="number" name="precio" placeholder="Ingresa precio" class="form-control my-3" required />
+                          <input type="number" name="descuento" placeholder="Ingresa descuento" class="form-control my-3" required />
+                          <div >
+                              <label for="inputState" class="form-label">Estado</label>
+                              <select id="estado" class="form-select estado" required>
+                                  <option selected value="">Seleccione Estado...</option>
+                                  <option type="text" value="1" id="1">estado 1</option>
+                                  <option type="text" value="2" id="2">estado 2</option>
+                                  <option type="text" value="3" id="3">estado 3</option>
+                              </select>
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                              <button type="button" class="btn btn-primary" onclick="createpaquete()">Crear</button>
+                          </div>
+                      </form>
+                      <div class="mt-3" id="cargarViajeRespuesta">
+      
+                      </div>
+                  </div>
+      
+              </div>
+          </div>
+      </div>    
+
+<div class="row justify-content-center align-items-center">
+<table  id="regTable" class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">lugar</th>
+        <th scope="col">descripcion</th>
+        <th scope="col">atractivo</th>
+        <th scope="col">historia</th>
+        <th scope="col">accion</th>
+      </tr>
+    </thead>
+    <tbody id="tbodypaquete">
+    </tbody>
+    </table>
+</div>`
+var tabla = document.querySelector('#tbodypaquete')
+    for (let valor of data) {
+        tabla.innerHTML += `
+        <tr>
+        <th scope="row">${valor.id}</th>
+        <td>${valor.lugar}</td>
+        <td>${valor.descripcion}</td>
+        <td>${valor.atractivo}</td>
+        <td>${valor.historia}</td>
         <td>
             <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editarpaqueteModal" onclick="editpaquete(${valor.id})">Editar</button>
             <button type="button" class="btn btn-outline-danger" onclick="delitepaquete(${valor.id})">Borrar</button>
