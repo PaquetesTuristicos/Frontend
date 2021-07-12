@@ -44,8 +44,8 @@ function renderizarPaquetes(paquetes){
           <p class="card-text">${paquete.descripcion}</p>
         </div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">Salida el ${paquete.fechaSalida}</li>
-          <li class="list-group-item">${paquete.totalNoches} noches</li>
+          <li class="list-group-item">Salida el ${paquete.fechasalida}</li>
+          <li class="list-group-item">${paquete.totalnoches} noches</li>
           <li class="list-group-item">$${paquete.precio}</li>
           <li class="list-group-item" style="color: brown">Descuento ${paquete.descuento}%</li>
         </ul>
@@ -66,4 +66,7 @@ function RedesSociales(event){
             scrollTop: $('#social').offset().top
         }
     );
+}
+function login(){
+  window.location.href = "http://localhost/paquetes/Frontend/admin/login.html";
 }

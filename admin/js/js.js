@@ -7,6 +7,10 @@ var bottomViajes = document.getElementById('bottomViajes');
 var bottomTransporte = document.getElementById('bottomTransporte');
 var bottomUsuario = document.getElementById('bottomUsuario');
 
+
+function login(){
+    window.location.href = 'admin/login.html'
+}
 // validacion de login 
 function validarLogin(){
     if(localStorage.getItem('token') != null ){
