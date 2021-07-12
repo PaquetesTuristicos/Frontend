@@ -308,11 +308,11 @@ function destinos(data) {
     <h3>Destinos</h3>
       </div>
 
-      <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#cargarPaqueteModal">
+      <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#cargarDestinoModal">
       Nuevo Destinos
       </button>  
       <!-- Modal -->
-      <div class="modal fade" id="cargarPaqueteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal fade" id="cargarDestinoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
               <div class="modal-content">
                   <div class="modal-header">
@@ -320,27 +320,14 @@ function destinos(data) {
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
-                      <form id="cargarpaqueteForm">                   
-                          <input type="text" name="nombre" placeholder="Ingresa Nombre" class="form-control my-3" required />
+                      <form id="cargardestinoForm">                   
+                          <input type="text" name="lugar" placeholder="Ingresa lugar" class="form-control my-3" required />
                           <input type="text" name="descripcion" placeholder="Ingresa descripcion" class="form-control my-3" required />
-                          <label class="form-label">fecha de salida</label>
-                          <input type="datetime-local" name="fechasalida" placeholder="Ingresa fecha de salida" class="form-control my-3" required />
-                          <label class="form-label">fecha de vuelta</label>
-                          <input type="datetime-local" name="fechavuelta" placeholder="Ingresa fecha de vuelta" class="form-control my-3" required />
-                          <input type="number" name="precio" placeholder="Ingresa precio" class="form-control my-3" required />
-                          <input type="number" name="descuento" placeholder="Ingresa descuento" class="form-control my-3" required />
-                          <div >
-                              <label for="inputState" class="form-label">Estado</label>
-                              <select id="estado" class="form-select estado" required>
-                                  <option selected value="">Seleccione Estado...</option>
-                                  <option type="text" value="1" id="1">estado 1</option>
-                                  <option type="text" value="2" id="2">estado 2</option>
-                                  <option type="text" value="3" id="3">estado 3</option>
-                              </select>
-                          </div>
+                          <input type="text" name="atractivo" placeholder="Ingresa atractivo" class="form-control my-3" required />
+                          <input type="text" name="historia" placeholder="Ingresa historia" class="form-control my-3" required />
                           <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                              <button type="button" class="btn btn-primary" onclick="createpaquete()">Crear</button>
+                              <button type="button" class="btn btn-primary" onclick="createdestino()">Crear</button>
                           </div>
                       </form>
                       <div class="mt-3" id="cargarViajeRespuesta">
@@ -379,8 +366,52 @@ var tabla = document.querySelector('#tbodypaquete')
         <td>${valor.historia}</td>
         <td>
             <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editarpaqueteModal" onclick="editpaquete(${valor.id})">Editar</button>
-            <button type="button" class="btn btn-outline-danger" onclick="delitepaquete(${valor.id})">Borrar</button>
+            <button type="button" class="btn btn-outline-danger" onclick="delitedestino(${valor.id})">Borrar</button>
         </td>
       </tr>`
     }
 }
+
+//crear destino 
+function createdestino(){  
+    var formularioDestinoCargar = document.getElementById('cargardestinoForm');
+    var paqueteRespuestaCargar = document.getElementById('cargarpaqueteRespuesta');
+    let datos = new FormData(formularioDestinoCargar);
+    let jsonDataConvert = JSON.stringify(
+        {
+            lugar: datos.get('lugar'),
+            descripcion: datos.get('descripcion'),
+            atractivo: datos.get('atractivo'),
+            historia: datos.get('historia'),
+
+        }               
+    );
+    console.log(jsonDataConvert)
+
+    fetch(msdestinos, {
+        method: 'POST',
+        body: jsonDataConvert,
+        headers: myHeaders,
+        
+    })
+        .then(res => res.json())
+        .then(datos => {
+            console.log(datos)
+            alert("Destino creado")
+            location.reload()
+            
+        })
+}
+// eliminar destino 
+function delitedestino(id){
+    fetch(msdestinos+`${id}`, {
+      method: 'DELETE',
+      headers: myHeaders,
+  })
+      .then(res => res.json())
+      .then(datos => {
+          console.log(datos)
+          alert("Destino eliminado")
+          location.reload()
+      })
+  };
