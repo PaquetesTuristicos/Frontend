@@ -17,3 +17,11 @@ luego mergeamos con nuestra rama
 git merge "nombre_de_rama_sin_comillas"
 
 ejemplo git merge JuanCOnde --allow-unrelated-histories use para fusionar mi rama a la rama main
+
+
+git branch
+git checkout rama
+git merge queramajuntar
+git add .
+git commit -m "comentario"
+git push
