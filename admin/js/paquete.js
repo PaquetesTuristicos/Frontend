@@ -85,13 +85,13 @@ var tabla = document.querySelector('#tbodypaquete')
         <th scope="row">${valor.id}</th>
         <td>${valor.nombre}</td>
         <td>${valor.descripcion}</td>
-        <td>${valor.fechasalida}</td>
-        <td>${valor.fechavuelta}</td>
-        <td>${valor.totalnoches}</td>
+        <td>${valor.fechaSalida}</td>
+        <td>${valor.fechaVuelta}</td>
+        <td>${valor.totalNoches}</td>
         <td>${valor.precio}</td>
         <td>${valor.descuento}</td>
         <td>
-            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editarpaqueteModal" onclick="editpaquete(${valor.id})">Editar</button>
+            <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#verpaqueteModal" onclick="verpaquete(${valor.id})">Ver</button>
             <button type="button" class="btn btn-outline-danger" onclick="delitepaquete(${valor.id})">Borrar</button>
         </td>
       </tr>`
@@ -128,9 +128,9 @@ function createpaquete(){
             location.reload()
         })
 }
-// editar paquete 
-function editpaquete(id){
-    var formulariopaqueteEdit = document.getElementById('editpaqueteForm');
+// Ver paquete 
+function verpaquete(id){
+    var formulariopaqueteVer = document.getElementById('verpaqueteForm');
     var paqueteRespuestaEdit = document.getElementById('editpaqueteRespuesta');
 
     fetch(mspaquete+`${id}`, {
@@ -140,44 +140,41 @@ function editpaquete(id){
         .then(res => res.json())
         .then(data => {
             console.log(data)
-            formulariopaqueteEdit.querySelector('.id').value = id
-            formulariopaqueteEdit.querySelector('.nombre').value = data.nombre
-            formulariopaqueteEdit.querySelector('.apellido').value = data.apellido
-            formulariopaqueteEdit.querySelector('.email').value = data.email
-            formulariopaqueteEdit.querySelector('.password').value = data.password
-
+            pintarVerPaquete(data)
         })
-        var bottomEdit = document.getElementById('editarpaquete')
-        bottomEdit.addEventListener('click', function(e){
-            e.preventDefault();
-            ejecutarEdit(id)
-        });
-        function ejecutarEdit(id){
-            var formulariopaqueteEdit = document.getElementById('editpaqueteForm');
-            var datos = new FormData(formulariopaqueteEdit);
-            let jsonDataConvertEdit = JSON.stringify(
-                {
-                    nombre: datos.get('nombre'),
-                    apellido: datos.get('apellido'),
-                    email: datos.get('email'),
-                    password: datos.get('password'),
-                    roll: new Number(document.getElementById("editroll").value)
-                }               
-            );
-            fetch(mspaquete+`${id}`, {
-                method: 'PUT',
-                body: jsonDataConvertEdit,
-                headers: myHeaders,
-                
-            })
-                .then(res => res.json())
-                .then(datos => {
-                    console.log(datos)
-                    alert("paquete editado")
-                    location.reload()
-                })
-            }
+        
   };
+
+  function pintarVerPaquete(datos){
+    var formulariopaqueteVer = document.getElementById('verpaqueteForm');
+    formulariopaqueteVer.innerHTML = ''
+    formulariopaqueteVer.innerHTML = `
+    <div class="card-body">
+      <h5 class="card-title destino">Paquete ${datos.id} ${datos.nombre}</h5>
+      <p class="card-text descripcion"><strong>Descripcion: </strong> ${datos.descripcion}</p>
+      <p class="card-text fechaSalida"><strong>Salida: </strong> ${datos.fechaSalida}</p>
+      <p class="card-text fechaVuelta"><strong>Vuelta: </strong> ${datos.fechaVuelta}</p>
+    </div>
+ `
+ for (let valor of datos.listaDestinosDetalles) {
+    console.log(valor)
+    console.log(valor.destino.lugar)
+    console.log(valor.hotel.marca)
+    formulariopaqueteVer.innerHTML += `
+    <h3>Noches: ${valor.noches}</h3>
+    <div class="card-body">
+      <h5 class="card-title destino">Destino ${valor.destino.id} ${valor.destino.lugar}</h5>
+    <p class="card-text hotel">${valor.destino.descripcion}</p>
+    <p class="card-text hotel">${valor.destino.historia}</p>
+      
+      </div>
+      <div class="card-body">
+      <h5 class="card-title destino">Hotel ${valor.hotel.id} ${valor.hotel.marca}</h5>
+      <p class="card-text hotel">Pension ${valor.hotelPension.descripcion}</p>
+      </div>
+    `
+}
+  }
 
 // eliminar paquete 
 function delitepaquete(id){
