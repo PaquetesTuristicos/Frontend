@@ -1,9 +1,10 @@
 const params = new URLSearchParams(window.location.search);
-
+const paqueteId = params.get("paqueteId");
+const nombrePaquete = params.get("nombrePaquete");
 
 
 window.document.querySelector("#reservaPaquete")
-.innerHTML = "Reservando paquete id:" + params.get("paqueteId");
+.innerHTML = "Reservando <i>" + nombrePaquete + "</i>";
 
 
 

@@ -31,7 +31,7 @@ function renderizarDestinos(destinos){
           <li class="list-group-item">${destino.historia}</li>
         </ul>
         <div class="card-body">
-          <a href="index.html?destinoId=${destino.id}" class="card-link">Paquetes</>
+          <a href="index.html?destinoId=${destino.id}&lugar=${destino.lugar}" class="card-link">Paquetes</>
         </div>
       </div>`
     };

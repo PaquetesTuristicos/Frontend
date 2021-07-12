@@ -1,11 +1,13 @@
 const params = new URLSearchParams(window.location.search);
 
-const titulo = window.document.getElementById("paqueteTitulo");
-
 if(!params.has("paqueteId")) {
   alert("Error: No hay una identificación del paquete");
   window.history.go(-1);
 };
+
+const titulo = window.document.getElementById("paqueteTitulo");
+var paquete;
+
 
 let URL = "https://localhost:44341/api/Paquetes/";
 URL += params.get("paqueteId");
@@ -28,20 +30,25 @@ prom.then(res => {
     for(let i=0; i < json.length; i++) {
         console.log(json[i].lugar);
     }
-    renderizarPaquete(json);
+    paquete = json;
+    renderizarPaquete();
 });
 
-function renderizarPaquete(paquete){
+function renderizarPaquete(){
   titulo.innerHTML = paquete.nombre;
   //document.getElementById("imagen1").getAttribute("src") = paquete.imagen;
   //document.getElementById("imagen2").getAttribute("src") = paquete.imagen;
-  document.getElementById("descripcion").innerHTML = paquete.descripcion;
-
+  const descripcion = document.getElementById("descripcion");
+  descripcion.innerHTML = "Salida el " + paquete.fechaSalida;
+  descripcion.innerHTML += "<br>Vuelta el " + paquete.fechaVuelta;
+  descripcion.innerHTML += "<br>Total " + paquete.totalNoches + " noches";
+  descripcion.innerHTML += "<br>" + paquete.descripcion;
 
 };
 
 function reservar() {
-  window.location.href = "reserva.html?paqueteId="+params.get("paqueteId");
+  window.location.href = "reserva.html?paqueteId=" + 
+  paquete.id + "&nombrePaquete=" + paquete.nombre;
 }
 
 //Redessociales

@@ -1,12 +1,13 @@
 const params = new URLSearchParams(window.location.search);
 const contenedor = window.document.getElementById("contenedorPaquetes");
 const id = params.get("destinoId");
+const lugar = params.get("lugar");
 
 let URL= "https://localhost:44341/api/Paquetes";
 
-if(params.has("destinoId")) {
+if(params.has("destinoId") && params.has("lugar")) {
   contenedor
-  .innerHTML = `<h3>Viendo paquetes del destino id:${id}</h3>`;
+  .innerHTML = `<h5><br>Viendo paquetes del destino <i>${lugar}</i></h5>`;
   URL += "/porDestino?destinoId=" + id;
 };
 
@@ -22,7 +23,7 @@ prom.then(res => {
   }
   else {
     console.log("no hay paquetes");
-    contenedor.innerHTML = `<h3>No hay Paquetes para el destino id:${id}</h3>`;
+    contenedor.innerHTML = `<h3>No hay Paquetes para el destino <i>${lugar}</i></h3>`;
   };
 }).then(json => {
     console.log(json);
@@ -51,7 +52,7 @@ function renderizarPaquetes(paquetes){
         </ul>
         <div class="card-body">
           <a class="card-link" href="paquete.html?paqueteId=${paquete.id}">Mas información</a>
-          <a class="card-link" href="reserva.html?paqueteId=${paquete.id}">Reservar YA</a>
+          <a class="card-link" href="reserva.html?paqueteId=${paquete.id}&nombrePaquete=${paquete.nombre}">Reservar YA</a>
         </div>
       </div>`
     };
