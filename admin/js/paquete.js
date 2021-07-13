@@ -313,7 +313,7 @@ function destinos(data) {
           <div class="modal-dialog">
               <div class="modal-content">
                   <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Nuevo Paquete</h5>
+                      <h5 class="modal-title" id="exampleModalLabel">Nuevo Destino</h5>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
@@ -322,6 +322,7 @@ function destinos(data) {
                           <input type="text" name="descripcion" placeholder="Ingresa descripcion" class="form-control my-3" required />
                           <input type="text" name="atractivo" placeholder="Ingresa atractivo" class="form-control my-3" required />
                           <input type="text" name="historia" placeholder="Ingresa historia" class="form-control my-3" required />
+                          <input type="text" name="imagen" placeholder="Ingresa imagen" class="form-control my-3" required />
                           <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                               <button type="button" class="btn btn-primary" onclick="createdestino()">Crear</button>
@@ -380,6 +381,7 @@ function createdestino(){
             descripcion: datos.get('descripcion'),
             atractivo: datos.get('atractivo'),
             historia: datos.get('historia'),
+            imagen: datos.get('imagen'),
 
         }               
     );

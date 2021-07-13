@@ -32,13 +32,79 @@ prom.then(res => {
 });
 
 function renderizarPaquete(paquete){
-  titulo.innerHTML = paquete.nombre;
-  //document.getElementById("imagen1").getAttribute("src") = paquete.imagen;
-  //document.getElementById("imagen2").getAttribute("src") = paquete.imagen;
-  document.getElementById("descripcion").innerHTML = paquete.descripcion;
+  console.log(paquete)
+  document.getElementById("contenido").innerHTML = `    
+  <div class="container">
+  <h3 id="paqueteTitulo">${paquete.nombre}</h3>
+</div>
+<div class="row g-0 bg-light position-relative">
+  <div class="col-md-6 mb-md-0 p-md-4">
+      <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img id="imagen1" src="image/calafate.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+              <img id="imagen2" src="image/calafate.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+              <img src="image/calafate.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+              <img src="image/calafate(3).jpg" class="d-block w-100" alt="...">
+            </div>
+          </div>
+        </div>
+  </div>
+  <div class="col-md-6 p-4 ps-md-0">
+    <h5 class="mt-0">${paquete.nombre}</h5>
+    <p id="descripcion">${paquete.descripcion}</p>
+    <div>
+    <a href="javascript: reservar()" class="stretched-link boton-personalizado-2">Reservar YA</a>
+    </div>
 
-
+   
+  </div>
+</div>`
+pintarHotelesPorPaquete(paquete)
 };
+
+function pintarHotelesPorPaquete(paquete){
+var hoteles =  document.getElementById("hoteles")
+for(let valor of paquete.listaDestinosDetalles){
+  hoteles.innerHTML += `
+  
+  <div class="card mb-3">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="image/hotelcalafate.jpg" alt="..." width="350" height="250">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+      <div class="container">
+      <h3 class="card-title"><i class="fa fa-plane" aria-hidden="true"></i> ${valor.destino.lugar}</h3>
+      <p class="card-text">${valor.destino.descripcion}</p>
+      <p class="card-text"><small class="text-muted">${valor.destino.historia}</small></p>
+      </div>
+        <h5 class="card-title"><i class="fa fa-bed" aria-hidden="true"></i> ${valor.hotel.marca}</h5>
+        <p class="clasificacion">
+        <label for="radio1">★</label>     
+        <label for="radio2">★</label>
+        <label for="radio3">★</label> 
+        <label for="radio4">★</label>
+        <label for="radio5">★</label>
+      </p>
+        <p class="card-text">Hermmoso hotel ubicado en zona centrica de la ciudad con una increible vista. Cuenta con gimnacio, pisina. media pension y servicio de caja fuerte.</p>
+        <p class="card-text"><small class="text-muted">Ultima actualizacion hace 3 minutos</small></p>
+      </div>
+
+      
+    </div>
+  </div>
+</div>`
+}
+
+}
 
 function reservar() {
   window.location.href = "reserva.html?paqueteId="+params.get("paqueteId");
