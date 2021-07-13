@@ -412,3 +412,18 @@ function delitedestino(id){
           location.reload()
       })
   };
+
+  function ListarHoteles(){
+    fetch('https://localhost:44341/api/hoteles/', {
+        method: 'GET',
+    })
+        .then(res => res.json())
+        .then(datos => {
+            console.log(datos)
+        })
+}
+var bottomNuevo = document.getElementById('nuevoPaquete')
+bottomNuevo.addEventListener('click', function(e){
+    e.preventDefault();
+    ListarHoteles()
+});

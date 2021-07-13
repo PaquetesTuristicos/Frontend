@@ -99,6 +99,66 @@ function createUsuario(){
             location.reload()
         })
 }
+
+//crear Psajero 
+function createPasajero(){  
+    var formularioPasajeroCargar = document.getElementById('cargarPasajeroForm');
+    var usuarioRespuestaCargar = document.getElementById('cargarUsuarioRespuesta');
+    var datos = new FormData(formularioPasajeroCargar);
+    let jsonDataConvert = JSON.stringify(
+        {
+            userId: new Number(datos.get('id')),
+            dni: new Number(datos.get('dni')),
+            telefono: new Number(datos.get('telefono')),
+            fechaNacimiento: datos.get('fechaNacimiento'),
+        }               
+    );
+    console.log(jsonDataConvert)
+
+    fetch(mspasajero, {
+        method: 'POST',
+        body: jsonDataConvert,
+        headers: myHeaders,
+        
+    })
+        .then(res => res.json())
+        .then(datos => {
+            console.log(datos)
+            alert("Pasajero creado")
+            location.reload()
+        })
+}
+
+//crear Empleado 
+function createEmpleado(){  
+    var formularioEmpleadoCargar = document.getElementById('cargarEmpleadoForm');
+    var usuarioRespuestaCargar = document.getElementById('cargarUsuarioRespuesta');
+    var datos = new FormData(formularioEmpleadoCargar);
+    let jsonDataConvert = JSON.stringify(
+        {       
+            dni: new Number(datos.get('dni')),
+            telefono: new Number(datos.get('telefono')),
+            fechaNacimiento: datos.get('fechaNacimiento'),
+            legajo: new Number(datos.get('legajo')),
+            sueldo: new Number(datos.get('sueldo')),
+            userId: new Number(datos.get('id')),
+        }               
+    );
+    console.log(jsonDataConvert)
+
+    fetch(msempleado, {
+        method: 'POST',
+        body: jsonDataConvert,
+        headers: myHeaders,
+        
+    })
+        .then(res => res.json())
+        .then(datos => {
+            console.log(datos)
+            alert("Empleado creado")
+            location.reload()
+        })
+}
 // editar usuario 
 function editUsuario(id){
     var formularioUsuarioEdit = document.getElementById('editUsuarioForm');
