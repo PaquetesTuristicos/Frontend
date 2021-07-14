@@ -39,7 +39,7 @@ function renderizarPaquetes(paquetes){
         paquete = paquetes[i];
         contenedor.innerHTML +=
         `<div class="card mt-4 paquete" style="width: 18rem;">
-        <img src="${paquete.imagen}" class="card-img-top" alt="Img paquete...">
+        <img src="https://loisuites.com.ar/sites/default/files/Loisuites_2020_promociones_miniescapada_chapelco_web_1.png" class="card-img-top" alt="Img paquete...">
         <div class="card-body">
           <h5 class="card-title">${paquete.nombre}</h5>
           <p class="card-text">${paquete.descripcion}</p>
@@ -67,4 +67,7 @@ function RedesSociales(event){
             scrollTop: $('#social').offset().top
         }
     );
+}
+function login(){
+  window.location.href = "http://localhost/paquetes/Frontend/admin/login.html";
 }

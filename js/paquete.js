@@ -34,6 +34,7 @@ prom.then(res => {
     renderizarPaquete();
 });
 
+<<<<<<< HEAD
 function renderizarPaquete(){
   titulo.innerHTML = paquete.nombre;
   //document.getElementById("imagen1").getAttribute("src") = paquete.imagen;
@@ -43,8 +44,81 @@ function renderizarPaquete(){
   descripcion.innerHTML += "<br>Vuelta el " + paquete.fechaVuelta;
   descripcion.innerHTML += "<br>Total " + paquete.totalNoches + " noches";
   descripcion.innerHTML += "<br>" + paquete.descripcion;
+=======
+function renderizarPaquete(paquete){
+  console.log(paquete)
+  document.getElementById("contenido").innerHTML = `    
+  <div class="container">
+  <h3 id="paqueteTitulo">${paquete.nombre}</h3>
+</div>
+<div class="row g-0 bg-light position-relative">
+  <div class="col-md-6 mb-md-0 p-md-4">
+      <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img id="imagen1" src="https://loisuites.com.ar/sites/default/files/Loisuites_2020_promociones_miniescapada_chapelco_web_1.png" class="d-block w-100" alt="...">
+            </div>
+          </div>
+        </div>
+  </div>
+  <div class="col-md-6 p-4 ps-md-0">
+    <h5 class="mt-0">${paquete.nombre}</h5>
+    <p id="descripcion">${paquete.descripcion}</p>
+    <h5>Salida y vuelta</h5>
+    <p class="card-text"><small class="text-muted">${paquete.fechaSalida} - ${paquete.fechaVuelta}</small></p>
+    <ul class="list-group list-group-flush">
+    <li class="list-group-item">${paquete.totalNoches} noches</li>
+    <li class="list-group-item">$${paquete.precio}</li>
+    <li class="list-group-item" style="color: brown">Descuento ${paquete.descuento}%</li>
+  </ul>
+  <br>
+    <div>
+    <a href="javascript: reservar()" class="stretched-link boton-personalizado-2">Reservar YA</a>
+    </div>
+>>>>>>> 0fa17bab7bff3309f93a4e8fc46fd8bca765e544
 
+   
+  </div>
+</div>`
+pintarHotelesPorPaquete(paquete)
 };
+
+function pintarHotelesPorPaquete(paquete){
+var hoteles =  document.getElementById("hoteles")
+for(let valor of paquete.listaDestinosDetalles){
+  hoteles.innerHTML += `
+  <div class="card mb-3">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="${valor.destino.imagen}" alt="..." width="350" height="250">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+      <div class="container">
+      <h3 class="card-title"><i class="fa fa-plane" aria-hidden="true"></i> ${valor.destino.lugar}</h3>
+      <p class="card-text">${valor.destino.descripcion}</p>
+      <p class="card-text"><small class="text-muted">${valor.destino.historia}</small></p>
+      </div>
+        <h5 class="card-title"><i class="fa fa-bed" aria-hidden="true"></i> ${valor.hotel.marca}</h5>
+        <p class="clasificacion">
+        <label for="radio1">★</label>     
+        <label for="radio2">★</label>
+        <label for="radio3">★</label> 
+        <label for="radio4">★</label>
+        <label for="radio5">★</label>
+      </p>
+      <p class="card-text"><small class="text-muted">Noches ${valor.noches}</small></p>
+        <p class="card-text">Hermmoso hotel ubicado en zona centrica de la ciudad con una increible vista. Cuenta con gimnacio, pisina. media pension y servicio de caja fuerte.</p>
+        <p class="card-text"><small class="text-muted">Ultima actualizacion hace 3 minutos</small></p>
+      </div>
+
+      
+    </div>
+  </div>
+</div>`
+}
+
+}
 
 function reservar() {
   window.location.href = "reserva.html?paqueteId=" + 
