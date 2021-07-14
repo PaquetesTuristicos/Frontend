@@ -3,7 +3,7 @@ const paqueteId = params.get("paqueteId");
 const nombrePaquete = params.get("nombrePaquete");
 
 window.document.querySelector("#reservaPaquete")
-.innerHTML = "Reservando <i>" + nombrePaquete + "</i>";
+.innerHTML += "<i>" + nombrePaquete + "</i>";
 
 var datos;
 let reservaForm = document.getElementById("reservaForm");
@@ -77,7 +77,7 @@ function registrarReserva(id) {
     console.log("registrando resesva de pasajero: " + id);
     let data3 = JSON.stringify(
         {
-            pasajeros: 1,
+            pasajeros: parseInt(datos.get("cantidadPas")),
             pasajeroId: id,
             formaPagoId: 7,
             paqueteId: paqueteId,
@@ -100,7 +100,17 @@ function registrarReserva(id) {
     })
     .then(dat => {
         console.log(dat);
-        alert(dat.message + "\n\nRecibirás un e-mail con los detalles");
+        const str = dat.message;
+        let i = str.indexOf("id:");
+        let j = str.indexOf("creada");
+        let substr = str.slice(i+3,j);
+        if (i == -1 || j == -1) {
+            alert(str);
+        }
+        else {
+            alert("\n\nTu reserva se realizó exitosamente\n\nNúmero de reserva #" +
+            substr + "\n\nRecibirás un e-mail con los detalles");
+        }
         window.location.href = "index.html";
     });
 };

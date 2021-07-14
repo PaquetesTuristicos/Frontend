@@ -54,7 +54,6 @@
 
     <div class="container">
         <h1>Reserva</h1>
-        <h5 id="reservaPaquete"></h5>
       </div>
     <!-- formulario  -->
     <div class="container">
@@ -85,14 +84,19 @@
             </div>
             <div class="col-md-4">
                 <label for="FechaNacimiento" class="form-label">FechaNacimiento</label>
-                <input type="date" class="form-control" name="fechaNacimiento" required>
+                <input type="date" class="form-control" value="1990-01-31" min="1890-01-31" max="2002-01-31" name="fechaNacimiento" required>
             </div>
             <div class="col-12">
               <label for="direccion" class="form-label">Direccion</label>
               <input type="text" class="form-control" name="direccion" placeholder="calle y altura">
             </div>
+            <h5 id="reservaPaquete">Indica el total de pasajeros para reservar </h5>
+            <div class="col-md-2">
+              <label for="cantPasajeros" class="form-label">Pasajeros</label>
+              <input type="number" class="form-control" value=1 min=1 max=8 name="cantidadPas" required>
+            </div>
 
-            <div class="col-12">
+            <div class="col-md-12">
               <button type="submit" class="btn btn-primary">Reservar</button>
             </div>
           </form>
