@@ -79,13 +79,13 @@ function registrarReserva(id) {
         {
             pasajeros: parseInt(datos.get("cantidadPas")),
             pasajeroId: id,
-            formaPagoId: 7,
+            formaPagoId: 1,
             paqueteId: paqueteId,
             listaExcursiones: []
           }
     );
     console.log(data3);
-    fetch("https://localhost:44341/api/Reserva", {
+    fetch(`https://localhost:44341/api/Reserva`, {
         method: 'POST',
         body: data3,
         headers: {"Content-type": "application/json; charset=UTF-8"}
