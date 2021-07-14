@@ -59,6 +59,65 @@ function paquetes(data) {
     <div class="row">
     <h3>Paquetes</h3>
       </div>
+
+      
+      <!-- Modal -->
+      <div class="modal fade" id="cargarPaqueteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Nuevo Paquete</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                      <form id="cargarpaqueteForm"> 
+                        <div class="row">
+                          <div class="col">
+                          <input type="text" name="nombre" placeholder="Ingresa Nombre" class="form-control my-3" required />
+                        </div>
+                        <div class="col">
+                          <input type="text" name="descripcion" placeholder="Ingresa descripcion" class="form-control my-3" required />
+                        </div>
+                        </div>                  
+                          <div class="col">
+                          <label class="form-label">fecha de salida</label>
+                          <input type="datetime-local" name="fechasalida" placeholder="Ingresa fecha de salida" class="form-control my-3" required />
+                        </div>
+                        <div class="col">
+                          <label class="form-label">fecha de vuelta</label>
+                          <input type="datetime-local" name="fechavuelta" placeholder="Ingresa fecha de vuelta" class="form-control my-3" required />
+                        </div>
+                        <div class="row">
+                          <div class="col">
+                          <input type="number" name="precio" placeholder="Ingresa precio" class="form-control my-3" required />
+                        </div>
+                          <div class="col">
+                          <input type="number" name="descuento" placeholder="Ingresa descuento" class="form-control my-3" required />
+                        </div>
+                        </div>
+                          <div >
+                              <label for="inputState" class="form-label">Estado</label>
+                              <select id="paqueteEstadoId" class="form-select estado" required>
+                                  <option selected value="">Seleccione Estado...</option>
+                                  <option type="text" value="1" id="1">Activo 1</option>
+                                  <option type="text" value="2" id="2">Cerrado 2</option>
+                                  <option type="text" value="3" id="3">Bloqueado 3</option>
+                                  <option type="text" value="3" id="4">Cancelado 4</option>
+                              </select>
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                              <button type="button" class="btn btn-primary" onclick="createpaquete()">Crear</button>
+                          </div>
+                      </form>
+                      <div class="mt-3" id="cargarViajeRespuesta">
+      
+                      </div>
+                  </div>
+      
+              </div>
+          </div>
+      </div>
 <div class="row justify-content-center align-items-center">
 <table  id="regTable" class="table">
     <thead>
@@ -107,10 +166,13 @@ function createpaquete(){
         {
             nombre: datos.get('nombre'),
             descripcion: datos.get('descripcion'),
-            fechasalida: datos.get('fechasalida'),
-            fechavuelta: datos.get('fechavuelta'),
+            fechaSalida: datos.get('fechasalida'),
+            fechaVuelta: datos.get('fechavuelta'),
             precio: new Number(datos.get('precio')),
             descuento: new Number(datos.get('descuento')),
+            paqueteEstadoId: new Number(document.getElementById("paqueteEstadoId").value),
+            prioridad: 1,
+            listaDestinoHotelNochesPension:[[4,2,1,1]]
         }               
     );
     console.log(jsonDataConvert)
@@ -125,7 +187,7 @@ function createpaquete(){
         .then(datos => {
             console.log(datos)
             alert("paquete creado")
-            location.reload()
+            // location.reload()
         })
 }
 // Ver paquete 
@@ -346,6 +408,7 @@ function destinos(data) {
         <th scope="col">descripcion</th>
         <th scope="col">atractivo</th>
         <th scope="col">historia</th>
+        <th scope="col">imagen</th>
         <th scope="col">accion</th>
       </tr>
     </thead>
@@ -362,6 +425,7 @@ var tabla = document.querySelector('#tbodypaquete')
         <td>${valor.descripcion}</td>
         <td>${valor.atractivo}</td>
         <td>${valor.historia}</td>
+        <td><img class="img-responsive img-thumbnail" src="${valor.imagen}" style="height: 100px; width: 100px" alt=""></td>
         <td>
             <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editarpaqueteModal" onclick="editpaquete(${valor.id})">Editar</button>
             <button type="button" class="btn btn-outline-danger" onclick="delitedestino(${valor.id})">Borrar</button>

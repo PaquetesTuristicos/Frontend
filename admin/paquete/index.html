@@ -150,17 +150,16 @@
                           <input type="number" name="descuento" placeholder="Ingresa descuento" class="form-control my-3" required />
                         </div>
                         </div>
-                      
                           <div >
                               <label for="inputState" class="form-label">Estado</label>
-                              <select id="estado" class="form-select estado" required>
+                              <select id="paqueteEstadoId" class="form-select estado" required>
                                   <option selected value="">Seleccione Estado...</option>
-                                  <option type="text" value="1" id="1">estado 1</option>
-                                  <option type="text" value="2" id="2">estado 2</option>
-                                  <option type="text" value="3" id="3">estado 3</option>
+                                  <option type="text" value="1" id="1">Activo 1</option>
+                                  <option type="text" value="2" id="2">Cerrado 2</option>
+                                  <option type="text" value="3" id="3">Bloqueado 3</option>
+                                  <option type="text" value="3" id="4">Cancelado 4</option>
                               </select>
                           </div>
-                          
                           <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                               <button type="button" class="btn btn-primary" onclick="createpaquete()">Crear</button>

@@ -42,16 +42,7 @@ function renderizarPaquete(paquete){
       <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
           <div class="carousel-inner">
             <div class="carousel-item active">
-              <img id="imagen1" src="image/calafate.jpg" class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-              <img id="imagen2" src="image/calafate.jpg" class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-              <img src="image/calafate.jpg" class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-              <img src="image/calafate(3).jpg" class="d-block w-100" alt="...">
+              <img id="imagen1" src="https://loisuites.com.ar/sites/default/files/Loisuites_2020_promociones_miniescapada_chapelco_web_1.png" class="d-block w-100" alt="...">
             </div>
           </div>
         </div>
@@ -59,6 +50,14 @@ function renderizarPaquete(paquete){
   <div class="col-md-6 p-4 ps-md-0">
     <h5 class="mt-0">${paquete.nombre}</h5>
     <p id="descripcion">${paquete.descripcion}</p>
+    <h5>Salida y vuelta</h5>
+    <p class="card-text"><small class="text-muted">${paquete.fechaSalida} - ${paquete.fechaVuelta}</small></p>
+    <ul class="list-group list-group-flush">
+    <li class="list-group-item">${paquete.totalNoches} noches</li>
+    <li class="list-group-item">$${paquete.precio}</li>
+    <li class="list-group-item" style="color: brown">Descuento ${paquete.descuento}%</li>
+  </ul>
+  <br>
     <div>
     <a href="javascript: reservar()" class="stretched-link boton-personalizado-2">Reservar YA</a>
     </div>
@@ -73,11 +72,10 @@ function pintarHotelesPorPaquete(paquete){
 var hoteles =  document.getElementById("hoteles")
 for(let valor of paquete.listaDestinosDetalles){
   hoteles.innerHTML += `
-  
   <div class="card mb-3">
   <div class="row g-0">
     <div class="col-md-4">
-      <img src="image/hotelcalafate.jpg" alt="..." width="350" height="250">
+      <img src="${valor.destino.imagen}" alt="..." width="350" height="250">
     </div>
     <div class="col-md-8">
       <div class="card-body">
@@ -94,6 +92,7 @@ for(let valor of paquete.listaDestinosDetalles){
         <label for="radio4">★</label>
         <label for="radio5">★</label>
       </p>
+      <p class="card-text"><small class="text-muted">Noches ${valor.noches}</small></p>
         <p class="card-text">Hermmoso hotel ubicado en zona centrica de la ciudad con una increible vista. Cuenta con gimnacio, pisina. media pension y servicio de caja fuerte.</p>
         <p class="card-text"><small class="text-muted">Ultima actualizacion hace 3 minutos</small></p>
       </div>
