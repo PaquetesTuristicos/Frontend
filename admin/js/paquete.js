@@ -342,6 +342,15 @@ function hoteles(data) {
                           <input type="text" name="sucursal" placeholder="Ingresa sucursal" class="form-control my-3" required />
                           <input type="text" name="estrellas" placeholder="Ingresa estrellas" class="form-control my-3" required />
                           <input type="text" name="destinoId" placeholder="Ingresa destinoId" class="form-control my-3" required />
+                          <div >
+                          <label for="inputState" class="form-label">Estado</label>
+                          <select id="hotelestado" class="form-select estado" required>
+                              <option selected value="">Seleccione Estado...</option>
+                              <option type="text" value="2" id="1">Activo</option>
+                              <option type="text" value="1" id="3">Bloqueado</option>
+
+                          </select>
+                      </div>
                           <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                               <button type="button" class="btn btn-primary" onclick="createHotel()">Crear</button>
@@ -530,12 +539,18 @@ function createHotel(){
     var formularioHotelCargar = document.getElementById('cargarHotelForm');
     var paqueteRespuestaCargar = document.getElementById('cargarpaqueteRespuesta');
     let datos = new FormData(formularioHotelCargar);
+    var estado
+    if (new Number(document.getElementById('hotelestado').value)==1){
+        estado=true
+    }else{
+        estado=false
+    }
     let jsonDataConvert = JSON.stringify(
         {
             marca: datos.get('marca'),
             sucursal: datos.get('sucursal'),
             estrellas: datos.get('estrellas'),
-            bloqueado: true,
+            bloqueado: estado,
             direccionId: 0,
             destinoId: new Number(datos.get('destinoId')),
         }               
