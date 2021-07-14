@@ -325,6 +325,36 @@ function hoteles(data) {
     <div class="row">
     <h3>Hoteles</h3>
       </div>
+      <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#cargarHotelModal">
+      Nuevo Hotel
+      </button>  
+      <!-- Modal -->
+      <div class="modal fade" id="cargarHotelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Nuevo Hotel</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                      <form id="cargarHotelForm">                   
+                          <input type="text" name="marca" placeholder="Ingresa marca" class="form-control my-3" required />
+                          <input type="text" name="sucursal" placeholder="Ingresa sucursal" class="form-control my-3" required />
+                          <input type="text" name="estrellas" placeholder="Ingresa estrellas" class="form-control my-3" required />
+                          <input type="text" name="destinoId" placeholder="Ingresa destinoId" class="form-control my-3" required />
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                              <button type="button" class="btn btn-primary" onclick="createHotel()">Crear</button>
+                          </div>
+                      </form>
+                      <div class="mt-3" id="cargarViajeRespuesta">
+      
+                      </div>
+                  </div>
+      
+              </div>
+          </div>
+      </div>    
 <div class="row justify-content-center align-items-center">
 <table  id="regTable" class="table">
     <thead>
@@ -493,3 +523,36 @@ bottomNuevo.addEventListener('click', function(e){
     e.preventDefault();
     ListarHoteles()
 });
+
+
+//crear Hotel 
+function createHotel(){  
+    var formularioHotelCargar = document.getElementById('cargarHotelForm');
+    var paqueteRespuestaCargar = document.getElementById('cargarpaqueteRespuesta');
+    let datos = new FormData(formularioHotelCargar);
+    let jsonDataConvert = JSON.stringify(
+        {
+            marca: datos.get('marca'),
+            sucursal: datos.get('sucursal'),
+            estrellas: datos.get('estrellas'),
+            bloqueado: true,
+            direccionId: 0,
+            destinoId: new Number(datos.get('destinoId')),
+        }               
+    );
+    console.log(jsonDataConvert)
+
+    fetch(mshoteles, {
+        method: 'POST',
+        body: jsonDataConvert,
+        headers: myHeaders,
+        
+    })
+        .then(res => res.json())
+        .then(datos => {
+            console.log(datos)
+            alert("Destino creado")
+            location.reload()
+            
+        })
+}
