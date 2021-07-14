@@ -10,6 +10,7 @@ myHeaders = new Headers({
 login.addEventListener('submit', function (e) {
     e.preventDefault();
     var datos = new FormData(login);
+    console.log(datos.get('email')); 
     let jsonDataConvert = JSON.stringify(
         {
             email: datos.get('email'),
