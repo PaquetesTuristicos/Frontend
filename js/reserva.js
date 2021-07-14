@@ -1,9 +1,9 @@
 const params = new URLSearchParams(window.location.search);
 const paqueteId = params.get("paqueteId");
-const nombrePaquete = params.get("nombrePaquete");
+const A = params.get("nombrePaquete");
 
 window.document.querySelector("#reservaPaquete")
-.innerHTML += "<i>" + nombrePaquete + "</i>";
+.innerHTML += "<i>" + A + "</i>";
 
 var datos;
 let reservaForm = document.getElementById("reservaForm");
