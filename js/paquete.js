@@ -43,7 +43,7 @@ function renderizarPaquete(paquete){
       <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
           <div class="carousel-inner">
             <div class="carousel-item active">
-              <img id="imagen1" src="https://loisuites.com.ar/sites/default/files/Loisuites_2020_promociones_miniescapada_chapelco_web_1.png" class="d-block w-100" alt="...">
+              <img id="imagen1" src="${paquete.listaDestinosDetalles[0].destino.imagen}" class="d-block w-100" alt="...">
             </div>
           </div>
         </div>

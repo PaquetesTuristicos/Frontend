@@ -7,6 +7,9 @@ var mshoteles = `https://localhost:44341/api/hoteles/`
 var msexcursion = `https://localhost:44341/api/Excursion/`
 var msdestinos = `https://localhost:44341/api/destino/`
 var msreservas = `https://localhost:44341/api/reserva/`
+var msusuario = `https://localhost:44384/api/user/`
+var msempleado = `https://localhost:44384/api/empleado/`
+var mspasajero = `https://localhost:44384/api/pasajero/`
 
 var reserva = document.querySelector('#contenido')
 pintarReserva()
@@ -22,6 +25,38 @@ function pintarReserva(){
         })
 }
 
+function consultaUser(URL,id){
+  fetch(URL+`${id}`, {
+    method: 'GET',
+    headers: myHeaders,
+})
+    .then(res => res.json())
+    .then(datos => {
+        // console.log(datos.email)
+        pintarDatoUser(datos)
+    })
+    .catch(e => console.log(e));
+}
+function consultaPaquete(URL,id){
+  fetch(URL+`${id}`, {
+    method: 'GET',
+    headers: myHeaders,
+})
+    .then(res => res.json())
+    .then(paquete => {
+        // console.log(datos.email)
+        pintarDatoPaquete(paquete)
+    })
+    .catch(e => console.log(e));
+}
+function pintarDatoUser(datos){
+  console.log(datos)
+  document.getElementById('cliente').innerHTML = datos.email
+}
+function pintarDatoPaquete(paquete){
+  console.log(paquete)
+  document.getElementById('paquete').innerHTML = paquete.nombre
+}
 
 // carga datos en pantalla 
 function reservas(data) {
@@ -181,11 +216,18 @@ function verpaquete(id){
     <div class="card-body">
       <h5 class="card-title destino">Paquete ${datos.id} </h5>
       <p class="card-text fechaSalida"><strong>Pasajeros: </strong> ${datos.pasajeros}</p>
-      <p class="card-text descripcion"><strong>Descripcion: </strong> ${datos.pagado}</p>
-      <p class="card-text fechaSalida"><strong>Salida: </strong> ${datos.pasajeroId}</p>
-      <p class="card-text fechaVuelta"><strong>Vuelta: </strong> ${datos.formaPagoId}</p>
-      <p class="card-text fechaVuelta"><strong>Vuelta: </strong> ${datos.paqueteId}</p>
+      <p class="card-text descripcion"><strong>Pago: </strong> ${datos.pagado}</p>
+      <p class="card-text fechaSalida"><strong>Cliente: </strong><div id="cliente"> ${consultaUser(msusuario,datos.pasajeroId)}</div></p>
+      <p class="card-text fechaVuelta"><strong>Forma de Pago: </strong> ${datos.formaPagoId}</p>
+      <p class="card-text fechaVuelta"><strong>Paquete: </strong> <div id="paquete"> ${datos.paqueteId}</div></p>
     </div>
+
+1	Efectivo
+2	Tarjeta de crédito
+3	Tarjeta de débito
+4	Mercado Pago
+5	Pago Fácil
+6	Bitcoin
  `
 }
   
