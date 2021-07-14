@@ -1,13 +1,11 @@
 const params = new URLSearchParams(window.location.search);
 
+const titulo = window.document.getElementById("paqueteTitulo");
+
 if(!params.has("paqueteId")) {
   alert("Error: No hay una identificación del paquete");
   window.history.go(-1);
 };
-
-const titulo = window.document.getElementById("paqueteTitulo");
-var paquete;
-
 
 let URL = "https://localhost:44341/api/Paquetes/";
 URL += params.get("paqueteId");
@@ -30,21 +28,9 @@ prom.then(res => {
     for(let i=0; i < json.length; i++) {
         console.log(json[i].lugar);
     }
-    paquete = json;
-    renderizarPaquete();
+    renderizarPaquete(json);
 });
 
-<<<<<<< HEAD
-function renderizarPaquete(){
-  titulo.innerHTML = paquete.nombre;
-  //document.getElementById("imagen1").getAttribute("src") = paquete.imagen;
-  //document.getElementById("imagen2").getAttribute("src") = paquete.imagen;
-  const descripcion = document.getElementById("descripcion");
-  descripcion.innerHTML = "Salida el " + paquete.fechaSalida;
-  descripcion.innerHTML += "<br>Vuelta el " + paquete.fechaVuelta;
-  descripcion.innerHTML += "<br>Total " + paquete.totalNoches + " noches";
-  descripcion.innerHTML += "<br>" + paquete.descripcion;
-=======
 function renderizarPaquete(paquete){
   console.log(paquete)
   document.getElementById("contenido").innerHTML = `    
@@ -75,7 +61,6 @@ function renderizarPaquete(paquete){
     <div>
     <a href="javascript: reservar()" class="stretched-link boton-personalizado-2">Reservar YA</a>
     </div>
->>>>>>> 0fa17bab7bff3309f93a4e8fc46fd8bca765e544
 
    
   </div>
@@ -121,8 +106,7 @@ for(let valor of paquete.listaDestinosDetalles){
 }
 
 function reservar() {
-  window.location.href = "reserva.html?paqueteId=" + 
-  paquete.id + "&nombrePaquete=" + paquete.nombre;
+  window.location.href = "reserva.html?paqueteId="+params.get("paqueteId");
 }
 
 //Redessociales
