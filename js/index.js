@@ -42,7 +42,7 @@ function renderizarPaquetes(paquetes){
         <img src="https://loisuites.com.ar/sites/default/files/Loisuites_2020_promociones_miniescapada_chapelco_web_1.png" class="card-img-top" alt="Img paquete...">
         <div class="card-body">
           <h5 class="card-title">${paquete.nombre}</h5>
-          <p class="card-text">${paquete.descripcion}</p>
+          <p class="card-text">${paquete.descripcion}</p> 
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">Salida el ${paquete.fechaSalida}</li>

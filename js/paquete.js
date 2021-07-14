@@ -28,6 +28,7 @@ prom.then(res => {
     for(let i=0; i < json.length; i++) {
         console.log(json[i].lugar);
     }
+    nombrePaquete = json.nombre
     renderizarPaquete(json);
 });
 
@@ -106,7 +107,8 @@ for(let valor of paquete.listaDestinosDetalles){
 }
 
 function reservar() {
-  window.location.href = "reserva.html?paqueteId="+params.get("paqueteId");
+  //le falta esta lines a juan:
+  window.location.href = "reserva.html?paqueteId="+params.get("paqueteId")+"&nombrePaquete="+nombrePaquete;
 }
 
 //Redessociales
@@ -118,3 +120,4 @@ function RedesSociales(event){
         }
     );
 }
+
