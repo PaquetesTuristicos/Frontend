@@ -105,6 +105,20 @@ function paquetes(data) {
                                   <option type="text" value="3" id="4">Cancelado 4</option>
                               </select>
                           </div>
+                          <div class="row">
+                          <div class="col">
+                          <input type="text" name="Destino" placeholder="Destino" class="form-control my-3" required />
+                        </div>
+                        <div class="col">
+                          <input type="text" name="Hotel" placeholder="Hotel" class="form-control my-3" required />
+                        </div>
+                        <div class="col">
+                          <input type="text" name="Noches" placeholder="Noches" class="form-control my-3" required />
+                        </div>
+                        <div class="col">
+                          <input type="text" name="Pension" placeholder="Pension" class="form-control my-3" required />
+                        </div>
+                        </div> 
                           <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                               <button type="button" class="btn btn-primary" onclick="createpaquete()">Crear</button>
@@ -172,7 +186,12 @@ function createpaquete(){
             descuento: new Number(datos.get('descuento')),
             paqueteEstadoId: new Number(document.getElementById("paqueteEstadoId").value),
             prioridad: 1,
-            listaDestinoHotelNochesPension:[[4,2,1,1]]
+            listaDestinoHotelNochesPension:[[
+                new Number(datos.get('Destino')),
+                new Number(datos.get('Hotel')),
+                new Number(datos.get('Noches')),
+                new Number(datos.get('Pension'))
+            ]]
         }               
     );
     console.log(jsonDataConvert)
@@ -187,7 +206,7 @@ function createpaquete(){
         .then(datos => {
             console.log(datos)
             alert("paquete creado")
-            // location.reload()
+            location.reload()
         })
 }
 // Ver paquete 
