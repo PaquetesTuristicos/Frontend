@@ -38,7 +38,7 @@ function usuarios(data,tabla) {
     <h3>Usuarios</h3>
       </div>
 <div class="row justify-content-center align-items-center">
-<table class="table">
+<table class="table table-hover">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -58,7 +58,7 @@ var tabla = document.querySelector('#tbodyUsuario')
         tabla.innerHTML += `
         <tr>
         <th scope="row">${valor.userId}</th>
-        <td>${valor.nombre}</td>
+        <td ${valor.nombre}</td>
         <td>${valor.apellido}</td>
         <td>${valor.email}</td>
         <td>${valor.roll.nombre}</td>

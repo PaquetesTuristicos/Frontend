@@ -56,3 +56,7 @@
     display: block;
     font-size: 18px;
   }
+  .todo {
+    scroll-margin: sticky;
+
+    }
